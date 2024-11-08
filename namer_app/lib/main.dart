@@ -29,11 +29,17 @@ class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
   var favorites = <WordPair>[];
 
-  void toggleFavorite(){
-    if ( favorites.contains(current) ){
-      favorites.remove(current);
+  void toggleFavorite({WordPair? pair}){
+    WordPair localPair;
+    if (pair == null){
+      localPair = current;
+    }else {
+      localPair = pair;
+    }
+    if ( favorites.contains(localPair) ){
+      favorites.remove(localPair);
     } else {
-      favorites.add(current);
+      favorites.add(localPair);
     }
     notifyListeners();
   }
@@ -63,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritesPage();
         break;
       default:
       throw UnimplementedError('no widget for $selectedIndex');
@@ -114,12 +120,7 @@ class GeneratorPage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
+    
 
     return Center(
       child: Column(
@@ -130,13 +131,7 @@ class GeneratorPage extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
+              LikeButton(pair: pair),
               SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
@@ -182,4 +177,58 @@ class BigCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class LikeButton extends StatelessWidget {
+  const LikeButton({super.key, required this.pair});
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    IconData icon;
+    if (appState.favorites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
+    return ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite(pair:pair);
+                },
+                icon: Icon(icon),
+                label: Text('Like'),
+              );
+  }
+
+}
+
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var favoriteList = context.watch<MyAppState>().favorites;
+
+    return Center(
+      child: ListView(
+        
+        children: [
+          for(var favoritePair in favoriteList)
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    BigCard(pair: favoritePair),
+                    SizedBox(height: 10),
+                    LikeButton(pair: favoritePair),
+                  ],
+                ),
+            )
+           
+        ],
+      ),
+    );
+  }
+  
 }
