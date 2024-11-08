@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
   var favorites = <WordPair>[];
+  var wordHistory = <WordPair>[];
 
   void toggleFavorite({WordPair? pair}){
     WordPair localPair;
@@ -53,6 +54,8 @@ class MyAppState extends ChangeNotifier {
 // ...
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -82,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SafeArea(
                 child: NavigationRail(
                   extended: constraints.maxWidth >= 600,
-                  destinations: [
+                  destinations: const [
                     NavigationRailDestination(
                       icon: Icon(Icons.home),
                       label: Text('Home'),
@@ -114,33 +117,106 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class GeneratorPage extends StatelessWidget {
+class GeneratorPage extends StatefulWidget {
+  const GeneratorPage({super.key});
+
+  @override
+  State<GeneratorPage> createState() => _GeneratorPageState();
+}
+
+class _GeneratorPageState extends State<GeneratorPage> {
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
+    void _scrollToBottom(){
+      _scrollController.animateTo(
+        _scrollController.position.minScrollExtent, 
+        duration: const Duration(milliseconds: 300), 
+      curve: Curves.easeOut);
+    }
+
+    void _addToHistory(WordPair newPair) {
+      appState.wordHistory.insert(0,newPair);
+      _listKey.currentState?.insertItem(0);
+      _scrollToBottom();
+    }
+
+    
+
+    Widget historyList = ClipRect(
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return const LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [Colors.white, Colors.transparent],
+            stops: [0.5,0.9],
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstIn,
+        child: AnimatedList(
+              key: _listKey,
+              initialItemCount: appState.wordHistory.length,
+              controller: _scrollController,
+              reverse: true,
+              itemBuilder: (context, index, animation) {
+                var oldPair = appState.wordHistory[index];
+                return SizeTransition(
+                  sizeFactor: animation,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if(appState.favorites.contains(oldPair))
+                        const Icon(Icons.favorite),
+                      Text(oldPair.toString())
+                    ],
+                  ),
+                );
+              }
+            )
+      )
+    );
+    
+    Widget mainWordPair = Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                BigCard(pair: pair),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    LikeButton(pair: pair),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        _addToHistory(pair);
+                        appState.getNext();
+                      },
+                      child: Text('Next'),
+                    ),
+                  ],
+                ),
+              ],
+            );
     
 
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              LikeButton(pair: pair),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
+          Expanded(flex: 3, child: 
+            historyList,
           ),
+
+          Expanded(flex: 4,child: 
+            mainWordPair,
+          ),
+          
         ],
       ),
     );
@@ -198,7 +274,7 @@ class LikeButton extends StatelessWidget {
                   appState.toggleFavorite(pair:pair);
                 },
                 icon: Icon(icon),
-                label: Text('Like'),
+                label: const Text('Like'),
               );
   }
 
@@ -208,6 +284,10 @@ class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var favoriteList = context.watch<MyAppState>().favorites;
+
+    if (favoriteList.isEmpty){
+      return const Center(child: Text("There's no favorites yet."),);
+    }
 
     return Center(
       child: ListView(
@@ -220,7 +300,7 @@ class FavoritesPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     BigCard(pair: favoritePair),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     LikeButton(pair: favoritePair),
                   ],
                 ),
