@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = GeneratorPage();
+        page = const GeneratorPage();
         break;
       case 1:
         page = FavoritesPage();
@@ -133,17 +133,17 @@ class _GeneratorPageState extends State<GeneratorPage> {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
-    void _scrollToBottom(){
+    void scrollToBottom(){
       _scrollController.animateTo(
         _scrollController.position.minScrollExtent, 
         duration: const Duration(milliseconds: 300), 
       curve: Curves.easeOut);
     }
 
-    void _addToHistory(WordPair newPair) {
+    void addToHistory(WordPair newPair) {
       appState.wordHistory.insert(0,newPair);
       _listKey.currentState?.insertItem(0);
-      _scrollToBottom();
+      scrollToBottom();
     }
 
     
@@ -194,7 +194,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
                     const SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        _addToHistory(pair);
+                        addToHistory(pair);
                         appState.getNext();
                       },
                       child: Text('Next'),
