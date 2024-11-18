@@ -1,0 +1,7 @@
+name: todo_list_repository
+description: "Repository to the backend of the todo_list"
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.4
