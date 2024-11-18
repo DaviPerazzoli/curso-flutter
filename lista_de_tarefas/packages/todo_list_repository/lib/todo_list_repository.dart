@@ -1,3 +1,3 @@
 library todo_list_repository;
 
-export 'src/task_model.dart';
+export 'src/todo_model.dart';

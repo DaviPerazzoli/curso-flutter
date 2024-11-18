@@ -1,4 +1,4 @@
-import 'task.dart';
+import 'todo_model.dart';
 
 class TaskList {
   final List<Task> _tasks;

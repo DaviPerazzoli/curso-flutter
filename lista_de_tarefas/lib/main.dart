@@ -3,7 +3,7 @@ import 'package:todo_list_repository/todo_list_repository.dart';
 
 void main() {
   runApp(const MainApp());
-  TaskList list = TaskList([]);
+  
 }
 
 class MainApp extends StatelessWidget {

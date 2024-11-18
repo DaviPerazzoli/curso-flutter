@@ -1,4 +1,5 @@
 class Task {
+  int? id;
   String title;
   String? description;
   DateTime creationDate;
@@ -6,6 +7,7 @@ class Task {
   bool done;
 
   Task.create({
+    this.id,
     required this.title,
     this.description,
     this.dueDate,
@@ -14,6 +16,7 @@ class Task {
     done = false;
 
   Task.fromExistent({
+    required this.id,
     required this.title,
     this.description,
     this.dueDate,
@@ -35,6 +38,7 @@ class Task {
 
   Map<String, dynamic> toMap() {
     return {
+      "id": id,
       "title" : title,
       "description" : description,
       "creationDate" : creationDate.toIso8601String(),
@@ -45,6 +49,7 @@ class Task {
 
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task.fromExistent(
+      id: map['id'],
       title: map['title'],
       description: map['description'],
       creationDate: DateTime.parse(map['creationDate']),
