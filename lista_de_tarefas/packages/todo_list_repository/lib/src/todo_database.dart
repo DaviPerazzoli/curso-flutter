@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'todo_model.dart';
@@ -47,28 +48,60 @@ class TodoDatabase {
   }
 
   Future<int> createTask(Task task) async {
-    final db = await database;
-    final id = db.insert('tasks', task.toMap());
-    return id;
+    try {
+      final db = await database;
+      final id = db.insert('tasks', task.toMap());
+      return id;
+    } on DatabaseException catch(e) {
+      log('Erro com o banco de dados: $e');
+      return -1;
+    } on Exception catch(e) {
+      log('Erro desconhecido: $e');
+      return -1;
+    }
   }
 
   Future<TaskList> getAllTasks() async {
-    final db = await database;
-    final result = await db.query('tasks');
-    return TaskList(result.map( (json) => Task.fromMap(json)).toList());
+    try {
+      final db = await database;
+      final result = await db.query('tasks');
+      return TaskList(result.map( (json) => Task.fromMap(json)).toList());
+    } on DatabaseException catch (e) {
+      log('Erro com o banco de dados: $e');
+      return TaskList.empty();
+    } on Exception catch(e) {
+      log('Erro desconhecido: $e');
+      return TaskList.empty();
+    }
   }
 
   Future<int> updateTask(Task task) async {
-    final db = await database;
-    return await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
+    try{
+      final db = await database;
+      return await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
+    } on DatabaseException catch(e) {
+      log('Erro com o banco de dados: $e');
+      return -1;
+    } on Exception catch(e) {
+      log('Erro desconhecido: $e');
+      return -1;
+    }
   }
 
   Future<int> deleteTask(int id) async {
-    final db = await database;
-    return await db.delete(
-      'tasks',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    try {
+      final db = await database;
+      return await db.delete(
+        'tasks',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } on DatabaseException catch(e) {
+      log('Erro com o banco de dados: $e');
+      return -1;
+    } on Exception catch(e) {
+      log('Erro desconhecido: $e');
+      return -1;
+    }
   }
 }
