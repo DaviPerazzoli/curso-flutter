@@ -27,7 +27,7 @@ class AllTasksPage extends StatelessWidget implements AppPage{
     return Column(
       children: [
         for (Task t in tasks)
-          Text(t.title + t.creationDate.toIso8601String() + t.done.toString()),
+          Text('${t.id.toString()} / ${t.title} / ${t.creationDate.toIso8601String()} / ${t.done.toString()}'),
       ]
       
         

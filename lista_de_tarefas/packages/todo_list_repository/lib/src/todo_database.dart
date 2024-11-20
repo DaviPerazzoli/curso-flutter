@@ -85,6 +85,7 @@ class TodoDatabase {
 
   Future clearTasks() async {
     final db = await database;
-    return await db.delete('tasks');
+    await db.delete('tasks');
+    await db.execute('DELETE FROM sqlite_sequence WHERE name = "tasks"');
   }
 }
