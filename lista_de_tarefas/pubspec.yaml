@@ -13,6 +13,8 @@ dependencies:
   todo_list_repository:
     path: ./packages/todo_list_repository
   provider: ^6.0.0
+  sqflite: ^2.0.0+4
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:

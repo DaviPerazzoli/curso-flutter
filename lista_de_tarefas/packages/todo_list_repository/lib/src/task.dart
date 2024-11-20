@@ -33,7 +33,7 @@ class Task {
   }
 
   String get title {
-    return title;
+    return _title;
   }
   
   set title (String text) {
@@ -91,7 +91,7 @@ class Task {
       "description" : _description,
       "creationDate" : _creationDate.toIso8601String(),
       "dueDate" : _dueDate?.toIso8601String(),
-      "done" : _done,
+      "done" : _done ? 1 : 0,
     };
   }
 
@@ -101,7 +101,7 @@ class Task {
       title: map['title'],
       description: map['description'],
       creationDate: DateTime.parse(map['creationDate']),
-      done: map['done'],
+      done: map['done'] == 1? true: false,
       dueDate: map['dueDate'] != null ? DateTime.parse(map['dueDate']) : null,
     );
   }
