@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
-import 'package:lista_de_tarefas/view/components/app_page.dart';
+import 'package:lista_de_tarefas/view/components/page.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 
-class AllTasksPage extends StatelessWidget implements AppPage{
-  const AllTasksPage({super.key});
+class TasksPage extends StatelessWidget implements MyPage{
+  const TasksPage({super.key, required this.label, required this.icon});
 
   @override
-  String get label => 'All tasks';
-
+  final String label;
   @override
-  Icon get icon => const Icon(Icons.task);
+  final Icon icon;
 
   @override
   Widget build(BuildContext context) {
