@@ -54,12 +54,15 @@ class TodoListState extends ChangeNotifier{
         int index = taskList.tasks.indexWhere((element) => element.id == task.id);
         if (index != -1) {
           taskList.tasks[index] = task;
+          log('Updated task with id ${task.id}');
+        } else {
+          log('The updated task is not in the list');
         }
       }
       
-      
     } catch (e) {
       errorMessage = 'Failed to update task: $e';
+      log(errorMessage!);
     } finally {
       notifyListeners();
     }
