@@ -6,12 +6,16 @@ import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 
 class TasksPage extends StatelessWidget implements MyPage{
-  const TasksPage({super.key, required this.label, required this.icon});
+  const TasksPage({super.key, required this.label, required this.icon, this.onLoad});
 
   @override
   final String label;
+  
   @override
   final Icon icon;
+
+  @override
+  final Function? onLoad;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +31,14 @@ class TasksPage extends StatelessWidget implements MyPage{
     return Column(
       children: [
         for (Task t in tasks)
-          TaskCard(t, state: todoListState,),
+          TaskCard(t, state: todoListState),
       ]
       
         
     );
   }
+  
+  
   
   
   

@@ -1,12 +1,12 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 
 class TodoListState extends ChangeNotifier{
   final TodoDatabase _database = TodoDatabase.instance;
-  TaskList taskList = TaskList([Task.create(title: 'nova task',description: 'descricao foda', dueDate: DateTime.now())]);
+  TaskList taskList = TaskList.empty();
   String? errorMessage;
+  Function? lastCalledTaskSet;
 
   Future setAllTasks () async {
     try{
@@ -16,6 +16,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Failed to load all tasks: $e';
       log(errorMessage!);
     } finally {
+      lastCalledTaskSet = setAllTasks;
       notifyListeners();
     }
   }
@@ -28,6 +29,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Faield to set done tasks: $e';
       log(errorMessage!);
     } finally {
+      lastCalledTaskSet = setDoneTasks;
       notifyListeners();
     }
   }
@@ -43,6 +45,7 @@ class TodoListState extends ChangeNotifier{
       log(errorMessage!);
     } finally {
       notifyListeners();
+      lastCalledTaskSet?.call();
     }
   }
 
@@ -65,6 +68,7 @@ class TodoListState extends ChangeNotifier{
       log(errorMessage!);
     } finally {
       notifyListeners();
+      lastCalledTaskSet?.call();
     }
   }
 
@@ -77,6 +81,7 @@ class TodoListState extends ChangeNotifier{
       log(errorMessage!);
     } finally {
       notifyListeners();
+      lastCalledTaskSet?.call();
     }
   }
 }

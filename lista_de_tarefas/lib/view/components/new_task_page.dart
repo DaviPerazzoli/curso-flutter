@@ -13,6 +13,9 @@ class NewTaskPage extends StatelessWidget implements MyPage{
   Icon get icon => const Icon(Icons.add_circle);
 
   @override
+  final Function? onLoad = null;
+
+  @override
   Widget build(BuildContext context) {
     var state = context.watch<TodoListState>();
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
-import 'package:lista_de_tarefas/view/app_page.dart';
+import 'package:lista_de_tarefas/view/components/page.dart';
 import 'package:lista_de_tarefas/view/components/tasks_page.dart';
 import 'package:lista_de_tarefas/view/components/new_task_page.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
-  late final List<AppPage> pages;
+  late final List<MyPage> pages;
 
   @override
   void initState() {
@@ -22,33 +22,26 @@ class _HomePageState extends State<HomePage> {
     var state = context.read<TodoListState>();
 
     pages = [
-      AppPage(
-        page: const TasksPage(label: 'All tasks', icon: Icon(Icons.task)), 
-        onSelected: state.setAllTasks,
-        ),
-      AppPage(
-        page: const TasksPage(label: 'Done tasks', icon: Icon(Icons.download_done_sharp)), 
-        onSelected: state.setDoneTasks,
-        ),
-      AppPage(page: const NewTaskPage(),),
+        TasksPage(label: 'All tasks', icon: const Icon(Icons.task), onLoad: state.setAllTasks),
+        TasksPage(label: 'Done tasks', icon: const Icon(Icons.download_done_sharp), onLoad: state.setDoneTasks), 
+        const NewTaskPage(),
     ];
-    pages[0].onSelected?.call();
+    pages[0].onLoad?.call();
   }
 
 
   @override
   Widget build(BuildContext context) {
-
     void onDestinationSelected(int value) {
       setState(() {
         pageIndex = value;
       });
-      pages[value].onSelected?.call();
+      pages[value].onLoad?.call();
     }
 
     Widget page;
     try {
-      page = SafeArea(child: SingleChildScrollView(child: pages[pageIndex].page));
+      page = SafeArea(child: SingleChildScrollView(child: pages[pageIndex]));
     } on IndexError {
       throw UnimplementedError('No widget for $pageIndex');
     }
@@ -62,8 +55,8 @@ class _HomePageState extends State<HomePage> {
           child: NavigationRail(
             extended: isWide,
             destinations: [
-              for (AppPage p in pages)
-                NavigationRailDestination(icon: p.page.icon, label: Text(p.page.label)),
+              for (MyPage p in pages)
+                NavigationRailDestination(icon: p.icon, label: Text(p.label)),
             ],
             selectedIndex: pageIndex,
             onDestinationSelected: onDestinationSelected,
@@ -81,8 +74,8 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         body: container,
         bottomNavigationBar: isWide ? null : BottomNavigationBar(items: [
-          for (AppPage p in pages)
-            BottomNavigationBarItem(icon: p.page.icon,label: p.page.label),
+          for (MyPage p in pages)
+            BottomNavigationBarItem(icon: p.icon,label: p.label),
         ],
         currentIndex: pageIndex,
         onTap: onDestinationSelected,
