@@ -74,11 +74,11 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         body: container,
         bottomNavigationBar: isWide ? null : BottomNavigationBar(items: [
-          for (MyPage p in pages)
-            BottomNavigationBarItem(icon: p.icon,label: p.label),
-        ],
-        currentIndex: pageIndex,
-        onTap: onDestinationSelected,
+            for (MyPage p in pages)
+              BottomNavigationBarItem(icon: p.icon,label: p.label),
+          ],
+          currentIndex: pageIndex,
+          onTap: onDestinationSelected,
         
         ),
 
