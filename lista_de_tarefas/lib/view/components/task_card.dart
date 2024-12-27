@@ -3,13 +3,14 @@ import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 
 class TaskCard extends StatefulWidget {
-  final int id;
   final Task _task;
   final TodoListState state;
   final Function(int, bool)? onSelected;
   final bool inSelectionMode;
 
-  TaskCard(this._task,{super.key, required this.state, this.onSelected, required this.inSelectionMode}): id = _task.id!;
+  const TaskCard(this._task,{super.key, required this.state, this.onSelected, required this.inSelectionMode});
+
+  int get id => _task.id!;
 
   @override
   State<TaskCard> createState() => _TaskCardState();

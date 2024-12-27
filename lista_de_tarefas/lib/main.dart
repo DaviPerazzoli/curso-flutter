@@ -5,8 +5,9 @@ import 'app.dart';
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // import 'package:flutter/foundation.dart';
 
-// TODO Mudar como funciona o task_card, fazer o done mudar com um botão e acrescentar a funcionalidade
-// TODO de excluir tarefas, selecionando todas ou cada uma
+// TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
+// TODO Mudar o TaskCard: deixar mais bonito e mudar como funiona o done: colocar um icone, que muda de cor e de imagem conforme está feita ou não
+// TODO Quando uma tarefa está atrasada, mudar seu estilo
 void main() {
   // if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.windows || 
   //                 defaultTargetPlatform == TargetPlatform.linux || 
