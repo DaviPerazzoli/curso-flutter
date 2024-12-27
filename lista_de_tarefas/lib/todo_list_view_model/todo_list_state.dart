@@ -72,6 +72,18 @@ class TodoListState extends ChangeNotifier{
     }
   }
 
+  Future deleteTask(int id) async {
+    try {
+      _database.deleteTask(id);
+    } catch (e) {
+      errorMessage = 'Failed to delete task: $e';
+      log(errorMessage!);
+    } finally {
+      notifyListeners();
+      lastCalledTaskSet?.call();
+    }
+  }
+
   Future deleteAllTasks() async {
     try {
       _database.clearTasks();

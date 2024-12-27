@@ -38,6 +38,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
 
   void _updateDueDateField(){
     _dueDateController.text = _dueDate != null? '${_dueDate!.month}/${_dueDate!.day}/${_dueDate!.year}' : '';
+    
   }
 
   Future<void> _selectDueDate(BuildContext context) async {
@@ -71,61 +72,83 @@ class _NewTaskFormState extends State<NewTaskForm> {
         children: <Widget>[
 
           //* Task title field
-          TextFormField(
-            controller: _titleController,
-            autofocus: true,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Title',
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _titleController,
+              autofocus: true,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Title',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a title';
+                }
+                return null;
+              },
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a title';
-              }
-              return null;
-            },
           ),
 
           //* Task description field
-          TextFormField(
-            controller: _descriptionController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Description',
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Description',
+              ),
             ),
           ),
 
           //* Task dueDate field
-          TextFormField(
-            controller: _dueDateController,
-            onTap: () {
-              _selectDueDate(context);
-            }
-            
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _dueDateController,
+              onTap: () {
+                _selectDueDate(context);
+              },
+              readOnly: true,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Due date',
+              ),
+              
+            ),
           ),
 
           //* Submit button
-          ElevatedButton(
-            onPressed:() async {
-              if (_formKey.currentState!.validate()) {
-                await state.addTask(Task.create(
-                    title: _titleController.text,
-                    description: _descriptionController.text,
-                    dueDate: _dueDate,
-                  ));
-                _resetForm();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Task added!', style: TextStyle(color: Colors.white)),
-                    backgroundColor: Colors.green,
-                  )
-                );
-
-                
-
-              }
-            }, 
-            child: const Icon(Icons.add_circle))
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8))),
+              onPressed:() async {
+                if (_formKey.currentState!.validate()) {
+                  await state.addTask(Task.create(
+                      title: _titleController.text,
+                      description: _descriptionController.text,
+                      dueDate: _dueDate,
+                    ));
+                  _resetForm();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Task added!', style: TextStyle(color: Colors.white)),
+                      backgroundColor: Colors.green,
+                    )
+                  );
+                }
+              }, 
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  Icon(Icons.add_circle),
+                  Text(' Add task')
+                ],
+              )),
+          )
 
         ],
       )

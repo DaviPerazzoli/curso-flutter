@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'app.dart';
 // import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -14,6 +15,12 @@ void main() {
   //   sqfliteFfiInit();
   //   databaseFactory = databaseFactoryFfi;
   // }
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Trava a orientação para portrait
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   runApp(const MainApp());
   
 }
