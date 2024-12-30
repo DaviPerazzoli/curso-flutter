@@ -50,7 +50,17 @@ class _TaskCardState extends State<TaskCard> {
       });
     }
 
-    Color cardColor = isSelected ? Theme.of(context).primaryColorLight : Theme.of(context).cardColor;
+
+    Color cardColor;
+
+    if (isSelected) {
+      cardColor = Theme.of(context).primaryColorLight;
+    } else if (widget._task.isLate) {
+      cardColor = const Color.fromARGB(255, 248, 190, 186);
+    } else {
+      cardColor = Theme.of(context).cardColor;
+    }
+
     Color doneIconColor = isDone ? Colors.green : Theme.of(context).primaryColorLight;
     TextStyle? taskTitleStyle = Theme.of(context).textTheme.titleLarge;
     TextStyle? taskDetailsStyle = Theme.of(context).textTheme.bodyMedium;
@@ -102,7 +112,7 @@ class _TaskCardState extends State<TaskCard> {
                   
                       Text('Creation date: ${widget._task.readableCreationDate}', style: taskDetailsStyle),
                       if (widget._task.dueDate != null)
-                        Text('Due date: ${widget._task.readableDueDate}', style: taskDetailsStyle),
+                        Text('Due date: ${widget._task.readableDueDate}', style: taskDetailsStyle?.merge(TextStyle(color: widget._task.isLate? Colors.red : taskDetailsStyle.color))),
                     ],
                   ),
                 ), 

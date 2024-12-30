@@ -6,8 +6,8 @@ import 'app.dart';
 // import 'package:flutter/foundation.dart';
 
 // TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
-// TODO Mudar o TaskCard: deixar mais bonito e mudar como funiona o done: colocar um icone, que muda de cor e de imagem conforme está feita ou não
 // TODO Quando uma tarefa está atrasada, mudar seu estilo
+// TODO Dar a opção de escolher o tempo no dia para a dueDate
 
 void main() {
   // if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.windows || 

@@ -75,26 +75,34 @@ class _TasksPageState extends State<TasksPage> {
       });
     }
 
+    String selectionMenuText = _selectedTaskCards.length > 1 ? '${_selectedTaskCards.length} tasks selected' : '${_selectedTaskCards.length} task selected';
+
     var tasks = todoListState.taskList.tasks;
     if (tasks.isEmpty) {
       return const Center(
-        child: Text('Nenhuma tarefa ainda.'),
+        child: Text('No tasks yet'),
       );
     }
     
     return Column(
       children: [
-        if (inSelectionMode) 
-          Container(
+        AnimatedCrossFade(
+          firstChild: const SizedBox.shrink(),
+          secondChild: Container(
+            padding: const EdgeInsets.all(8),
             color: Theme.of(context).primaryColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('${_selectedTaskCards.length} tasks selected', style: const TextStyle(color: Colors.white),),
+                Text(selectionMenuText, style: const TextStyle(color: Colors.white),),
                 IconButton(onPressed: deleteSelected, icon: const Icon(Icons.delete_outline), color: Colors.white),
               ],
             ),
-          ),
+          ), 
+          crossFadeState: inSelectionMode? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          duration: const Duration(milliseconds: 200),
+        ),
+          
         for (Task t in tasks)
           TaskCard(t, state: todoListState, onSelected: onSelected, inSelectionMode: inSelectionMode),
       ]
