@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
           title: 'Todo List App',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
             useMaterial3: true,
           ),
           home: const HomePage(),

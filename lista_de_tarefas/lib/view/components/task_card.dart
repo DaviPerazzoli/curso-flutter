@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
@@ -18,12 +20,23 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardState extends State<TaskCard> {
   bool isSelected = false;
+  late bool isDone;
+  bool isExpanded = false;
+
+  @override
+  void initState() {
+    isDone = widget._task.done;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    void onChanged(bool? value) {
-      widget._task.done = value!;
+    void onDonePressed() {
+      widget._task.done = !widget._task.done;
       widget.state.updateTask(widget._task);
+      setState(() {
+        isDone = widget._task.done;
+      });
     }
 
     void onCardSelected () {
@@ -33,7 +46,16 @@ class _TaskCardState extends State<TaskCard> {
       widget.onSelected?.call(widget.id, isSelected);
     }
 
-    Color cardColor = isSelected ? const Color.fromARGB(121, 225, 190, 231) : Colors.transparent;
+    void showTaskDetails () {
+      setState(() {
+        isExpanded = !isExpanded;
+      });
+    }
+
+    Color cardColor = isSelected ? Theme.of(context).primaryColorLight : Theme.of(context).cardColor;
+    Color doneIconColor = isDone ? Colors.green : Theme.of(context).primaryColorLight;
+    TextStyle? taskTitleStyle = Theme.of(context).textTheme.titleLarge;
+    TextStyle? taskDetailsStyle = Theme.of(context).textTheme.bodyMedium;
     
     return GestureDetector(
       onLongPress: onCardSelected,
@@ -42,23 +64,73 @@ class _TaskCardState extends State<TaskCard> {
           onCardSelected();
         }
       },
-      child: Container(
-        color: cardColor,
+      child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Checkbox(value: widget._task.done, onChanged: onChanged, ),
-            Expanded(child:  Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${widget._task.id}. ${widget._task.title}'),
-                Text(widget._task.description!),
-              ],
-            ),
-            ),
-          ],
-        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: kElevationToShadow[8],
+            color: cardColor
+          ),
+          padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    //* Task title
+                    child: Text(
+                      widget._task.title,
+                      style: taskTitleStyle,
+                    ),
+                  ),
+              
+                  //* Done/undone button
+                  IconButton(onPressed: onDonePressed, icon: Icon(Icons.done, color: doneIconColor)),
+                ],
+              ),
 
+              //* Task details
+              AnimatedCrossFade(
+                firstChild: const SizedBox.shrink(),
+                secondChild: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (widget._task.description != null)
+                        Text(widget._task.description!, style: taskDetailsStyle,),
+                  
+                      Text('Creation date: ${widget._task.readableCreationDate}', style: taskDetailsStyle),
+                      if (widget._task.dueDate != null)
+                        Text('Due date: ${widget._task.readableDueDate}', style: taskDetailsStyle),
+                    ],
+                  ),
+                ), 
+                crossFadeState: isExpanded? CrossFadeState.showSecond : CrossFadeState.showFirst, 
+                firstCurve: Curves.easeIn,
+                secondCurve: Curves.easeIn,
+                duration: const Duration(milliseconds: 200)
+              ),
+              
+              
+              //* Show task details button
+              GestureDetector(
+                onTap: showTaskDetails,
+                child: AnimatedRotation(
+                  turns: isExpanded? 0.5 : 0, 
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  child: const Icon(Icons.keyboard_arrow_down),
+                ),
+              )
+              
+            ],
+          ),
+        
+        ),
+        
       )
     );
     

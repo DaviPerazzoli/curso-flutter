@@ -8,7 +8,7 @@ class TodoListState extends ChangeNotifier{
   String? errorMessage;
   Function? lastCalledTaskSet;
 
-  Future setAllTasks () async {
+  Future<void> setAllTasks () async {
     try{
       taskList = await _database.getAllTasks();
       log('All tasks set!');
@@ -21,7 +21,7 @@ class TodoListState extends ChangeNotifier{
     }
   }
   
-  Future setDoneTasks () async {
+  Future<void> setDoneTasks () async {
     try{
       taskList = await _database.getDoneTasks();
       log('Done tasks set!');
@@ -34,7 +34,7 @@ class TodoListState extends ChangeNotifier{
     }
   }
 
-  Future addTask (Task task) async {
+  Future<void> addTask (Task task) async {
     try {
       int id = await _database.createTask(task);
       task.id = id;
@@ -49,7 +49,7 @@ class TodoListState extends ChangeNotifier{
     }
   }
 
-  Future updateTask (Task task) async {
+  Future<void> updateTask (Task task) async {
      try {
       int affectedRows = await _database.updateTask(task);
       
@@ -72,7 +72,7 @@ class TodoListState extends ChangeNotifier{
     }
   }
 
-  Future deleteTask(int id) async {
+  Future<void> deleteTask(int id) async {
     try {
       _database.deleteTask(id);
     } catch (e) {
@@ -84,7 +84,7 @@ class TodoListState extends ChangeNotifier{
     }
   }
 
-  Future deleteAllTasks() async {
+  Future<void> deleteAllTasks() async {
     try {
       _database.clearTasks();
       log('All tasks deleted!');

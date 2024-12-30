@@ -8,6 +8,7 @@ import 'app.dart';
 // TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
 // TODO Mudar o TaskCard: deixar mais bonito e mudar como funiona o done: colocar um icone, que muda de cor e de imagem conforme está feita ou não
 // TODO Quando uma tarefa está atrasada, mudar seu estilo
+
 void main() {
   // if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.windows || 
   //                 defaultTargetPlatform == TargetPlatform.linux || 

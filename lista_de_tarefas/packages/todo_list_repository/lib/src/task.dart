@@ -84,6 +84,22 @@ class Task {
     return false;
   }
 
+  String _2digitNumber (int number) {
+    return number > 9? number.toString() : '0$number';
+  }
+
+  String _readableDateTime(DateTime? date) {
+    if (date == null) {
+      return '';
+    }
+    String readable = '${_2digitNumber(date.month)}/${_2digitNumber(date.day)}/${date.year} at ${_2digitNumber(date.hour)}:${_2digitNumber(date.minute)}:${_2digitNumber(date.second)}';
+    return readable;
+  }
+
+  String get readableDueDate => _readableDateTime(_dueDate);
+
+  String get readableCreationDate => _readableDateTime(_creationDate);
+
   Map<String, dynamic> toMap() {
     return {
       "id": _id,
