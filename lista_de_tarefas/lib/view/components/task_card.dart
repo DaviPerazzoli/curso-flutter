@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
@@ -78,8 +76,8 @@ class _TaskCardState extends State<TaskCard> {
             children: [
               Row(
                 children: [
+                  //* Task title
                   Expanded(
-                    //* Task title
                     child: Text(
                       widget._task.title,
                       style: taskTitleStyle,
@@ -91,7 +89,7 @@ class _TaskCardState extends State<TaskCard> {
                 ],
               ),
 
-              //* Task details
+              //* Task details (animated rolldown)
               AnimatedCrossFade(
                 firstChild: const SizedBox.shrink(),
                 secondChild: Padding(
@@ -115,7 +113,7 @@ class _TaskCardState extends State<TaskCard> {
               ),
               
               
-              //* Show task details button
+              //* Show task details button (animated rotation)
               GestureDetector(
                 onTap: showTaskDetails,
                 child: AnimatedRotation(
