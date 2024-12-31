@@ -78,15 +78,18 @@ class _TaskCardState extends State<TaskCard> {
           onCardSelected();
         }
       },
+      //* Padding outside the card
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+        //* Card
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            boxShadow: kElevationToShadow[8],
+            boxShadow: kElevationToShadow[4],
             color: cardColor
           ),
           padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
+          //* Card content
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
