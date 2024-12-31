@@ -66,9 +66,9 @@ class _TasksPageState extends State<TasksPage> {
     }
 
     void deleteSelected () {
-      _selectedTaskCards.forEach((int id) {
+      for (var id in _selectedTaskCards) {
         todoListState.deleteTask(id);
-      });
+      }
       _selectedTaskCards.clear();
       setState(() {
         inSelectionMode = false;

@@ -61,11 +61,11 @@ class TodoDatabase {
     final db = await database;
     final result = await db.query('tasks');
     List<Task> taskList = [];
-    result.forEach((element) {
+    for (var element in result) {
       if (element['done'] == 1) {
         taskList.add(Task.fromMap(element));
       }
-    });
+    }
     return TaskList(taskList);
   }
 
