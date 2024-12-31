@@ -6,7 +6,6 @@ import 'app.dart';
 // import 'package:flutter/foundation.dart';
 
 // TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
-// TODO Quando uma tarefa está atrasada, mudar seu estilo
 // TODO Dar a opção de escolher o tempo no dia para a dueDate
 
 void main() {

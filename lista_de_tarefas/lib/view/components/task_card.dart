@@ -49,7 +49,13 @@ class _TaskCardState extends State<TaskCard> {
         isExpanded = !isExpanded;
       });
     }
-
+    
+    // This is necessary when excluding task cards
+    if (!widget.inSelectionMode) {
+      setState(() {
+        isSelected = false;
+      });
+    }
 
     Color cardColor;
 

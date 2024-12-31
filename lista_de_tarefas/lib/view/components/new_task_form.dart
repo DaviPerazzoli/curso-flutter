@@ -49,12 +49,29 @@ class _NewTaskFormState extends State<NewTaskForm> {
       lastDate: DateTime(2100),
       helpText: 'Select the due date',
       cancelText: 'Cancel',
-      confirmText: 'ok'
+      confirmText: 'Ok'
     );
-    
-    if (pickedDate != _dueDate) {
+
+    TimeOfDay pickedTime = await showTimePicker(
+      // ignore: use_build_context_synchronously
+      context: context,
+      initialTime: const TimeOfDay(hour: 0, minute: 0),
+      helpText: 'Select due time',
+      confirmText: 'Ok',
+      cancelText: 'Cancel',
+    ) ?? const TimeOfDay(hour: 0, minute: 0);
+
+    // pickedTime ??= const TimeOfDay(hour: 0, minute: 0);
+
+    if (pickedDate != null) {
       setState(() {
-        _dueDate = pickedDate;
+        _dueDate = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
       });
     }
 
