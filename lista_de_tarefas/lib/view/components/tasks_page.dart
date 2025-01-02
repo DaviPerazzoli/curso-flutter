@@ -85,6 +85,40 @@ class _TasksPageState extends State<TasksPage> {
         child: Text('No tasks yet'),
       );
     }
+
+    List<Column> viewTaskList = tasks.map<Column>((Task task) {
+      if (tasks.indexOf(task) == 0 && task.dueDate == null) {
+        return Column(
+          children: [
+            const Center(child: Text('No due date')),
+            TaskCard(task, state: todoListState, onSelected: onSelected, inSelectionMode: inSelectionMode),
+          ],
+        );
+      }
+      shouldDisplayDate = false;
+
+      if (task.dueDate != null) {
+        DateTime? dueDateNoTime = DateTime(task.dueDate!.year, task.dueDate!.month, task.dueDate!.day);
+        if (previousDate == null) {
+          shouldDisplayDate = true;
+        } else {
+          
+          if (!dueDateNoTime.isAtSameMomentAs(previousDate!)) {
+            shouldDisplayDate = true;
+          }
+          
+        }
+        previousDate = dueDateNoTime;
+      }
+
+      return Column(
+        children: [
+          if (shouldDisplayDate)
+            Center(child: Text(task.readableDueDate.split(' ')[0]),),
+          TaskCard(task, state: todoListState, onSelected: onSelected, inSelectionMode: inSelectionMode),
+        ],
+      );
+    }).toList();
     
     return Column(
       children: [
@@ -105,39 +139,7 @@ class _TasksPageState extends State<TasksPage> {
           duration: const Duration(milliseconds: 200),
         ),
         Column(
-          children: tasks.map((Task task) {
-            if (tasks.indexOf(task) == 0 && task.dueDate == null) {
-              return Column(
-                children: [
-                  const Center(child: Text('No due date')),
-                  TaskCard(task, state: todoListState, onSelected: onSelected, inSelectionMode: inSelectionMode),
-                ],
-              );
-            }
-            shouldDisplayDate = false;
-
-            if (task.dueDate != null) {
-              DateTime? dueDateNoTime = DateTime(task.dueDate!.year, task.dueDate!.month, task.dueDate!.day);
-              if (previousDate == null) {
-                shouldDisplayDate = true;
-              } else {
-                
-                if (!dueDateNoTime.isAtSameMomentAs(previousDate!)) {
-                  shouldDisplayDate = true;
-                }
-               
-              }
-              previousDate = dueDateNoTime;
-            }
-
-            return Column(
-              children: [
-                if (shouldDisplayDate)
-                  Center(child: Text(task.readableDueDate.split(' ')[0]),),
-                TaskCard(task, state: todoListState, onSelected: onSelected, inSelectionMode: inSelectionMode),
-              ],
-            );
-          }).toList(),
+          children: viewTaskList,
         ) 
           
       ]
