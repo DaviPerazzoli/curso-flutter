@@ -131,7 +131,6 @@ class _TaskCardState extends State<TaskCard> {
                 duration: const Duration(milliseconds: 200)
               ),
               
-              
               //* Show task details button (animated rotation)
               GestureDetector(
                 onTap: showTaskDetails,
@@ -141,15 +140,11 @@ class _TaskCardState extends State<TaskCard> {
                   curve: Curves.easeInOut,
                   child: const Icon(Icons.keyboard_arrow_down),
                 ),
-              )
-              
+              ),
             ],
           ),
-        
         ),
-        
       )
     );
-    
   }
 }
