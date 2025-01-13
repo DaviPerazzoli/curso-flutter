@@ -1,12 +1,10 @@
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/page.dart';
 import 'package:lista_de_tarefas/view/components/task_card.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TasksPage extends StatefulWidget implements MyPage{
   const TasksPage({super.key, required this.label, required this.icon, this.onLoad});
@@ -33,6 +31,7 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     var todoListState = context.watch<TodoListState>();
+    AppLocalizations localization = AppLocalizations.of(context)!;
 
     void onSelected(int id, bool isSelected) {
       
@@ -40,18 +39,14 @@ class _TasksPageState extends State<TasksPage> {
         setState(() {
           inSelectionMode = true;
         });
-
-        log('Entered selection mode');
       }
       
       if (!isSelected) {
-        log('Card with being removed from list');
         setState(() {
           _selectedTaskCards.remove(id);
         });
         
       } else {
-        log('Card with being added to list');
         setState(() {
           _selectedTaskCards.add(id);
         });
@@ -61,10 +56,7 @@ class _TasksPageState extends State<TasksPage> {
         setState(() {
           inSelectionMode = false;
         });
-        log('Exited selection mode');
       }
-      log(_selectedTaskCards.length.toString());
-      log(id.toString());
     }
 
     void deleteSelected () {
@@ -77,12 +69,12 @@ class _TasksPageState extends State<TasksPage> {
       });
     }
 
-    String selectionMenuText = _selectedTaskCards.length > 1 ? '${_selectedTaskCards.length} tasks selected' : '${_selectedTaskCards.length} task selected';
+    String selectionMenuText = localization.nTasksSelected(_selectedTaskCards.length);
 
     var tasks = todoListState.taskList.tasks;
     if (tasks.isEmpty) {
-      return const Center(
-        child: Text('No tasks yet'),
+      return Center(
+        child: Text(localization.noTasksYet),
       );
     }
 
@@ -90,8 +82,8 @@ class _TasksPageState extends State<TasksPage> {
       if (tasks.indexOf(task) == 0 && task.dueDate == null) {
         return Column(
           children: [
-            const Center(child: Text('No due date')),
-            TaskCard(task, state: todoListState, onSelected: onSelected, inSelectionMode: inSelectionMode),
+            Center(child: Text(localization.noDueDate)),
+            TaskCard(task, onSelected: onSelected, inSelectionMode: inSelectionMode),
           ],
         );
       }
@@ -115,7 +107,7 @@ class _TasksPageState extends State<TasksPage> {
         children: [
           if (shouldDisplayDate)
             Center(child: Text(task.readableDueDate.split(' ')[0]),),
-          TaskCard(task, state: todoListState, onSelected: onSelected, inSelectionMode: inSelectionMode),
+          TaskCard(task, onSelected: onSelected, inSelectionMode: inSelectionMode),
         ],
       );
     }).toList();

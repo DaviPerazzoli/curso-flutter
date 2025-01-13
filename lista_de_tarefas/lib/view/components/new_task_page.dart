@@ -3,12 +3,13 @@ import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/new_task_form.dart';
 import 'package:lista_de_tarefas/view/components/page.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewTaskPage extends StatelessWidget implements MyPage{
-  const NewTaskPage({super.key});
-
+  const NewTaskPage({super.key, required this.label});
+  
   @override
-  String get label => 'New task';
+  final String label;
 
   @override
   Icon get icon => const Icon(Icons.add_circle);
@@ -25,7 +26,7 @@ class NewTaskPage extends StatelessWidget implements MyPage{
         const NewTaskForm(),
         ElevatedButton.icon(
           onPressed: state.deleteAllTasks,
-          label: const Text('Delete all tasks'),
+          label: Text(AppLocalizations.of(context)!.deleteAllTasks),
           icon: const Icon(Icons.delete_forever),
           ),
 

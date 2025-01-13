@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewTaskForm extends StatefulWidget {
   const NewTaskForm({super.key});
@@ -41,46 +42,50 @@ class _NewTaskFormState extends State<NewTaskForm> {
     
   }
 
-  Future<void> _selectDueDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context, 
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(), 
-      lastDate: DateTime(2100),
-      helpText: 'Select the due date',
-      cancelText: 'Cancel',
-      confirmText: 'Ok'
-    );
-
-    TimeOfDay pickedTime = await showTimePicker(
-      // ignore: use_build_context_synchronously
-      context: context,
-      initialTime: const TimeOfDay(hour: 0, minute: 0),
-      helpText: 'Select due time',
-      confirmText: 'Ok',
-      cancelText: 'Cancel',
-    ) ?? const TimeOfDay(hour: 0, minute: 0);
-
-    // pickedTime ??= const TimeOfDay(hour: 0, minute: 0);
-
-    if (pickedDate != null) {
-      setState(() {
-        _dueDate = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
-      });
-    }
-
-    _updateDueDateField();
-  }
+  
   
   @override
   Widget build(BuildContext context) {
     var state = context.watch<TodoListState>();
+    AppLocalizations localization = AppLocalizations.of(context)!;
+
+    Future<void> selectDueDate(BuildContext context) async {
+      final DateTime? pickedDate = await showDatePicker(
+        context: context, 
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(), 
+        lastDate: DateTime(2100),
+        helpText: localization.selectDueDate,
+        cancelText: localization.cancel,
+        confirmText: localization.ok
+      );
+
+      TimeOfDay pickedTime = await showTimePicker(
+        // ignore: use_build_context_synchronously
+        context: context,
+        initialTime: const TimeOfDay(hour: 0, minute: 0),
+        helpText: localization.selectDueTime,
+        confirmText: localization.ok,
+        cancelText: localization.cancel,
+      ) ?? const TimeOfDay(hour: 0, minute: 0);
+
+      // pickedTime ??= const TimeOfDay(hour: 0, minute: 0);
+
+      if (pickedDate != null) {
+        setState(() {
+          _dueDate = DateTime(
+            pickedDate.year,
+            pickedDate.month,
+            pickedDate.day,
+            pickedTime.hour,
+            pickedTime.minute,
+          );
+        });
+      }
+
+      _updateDueDateField();
+    }
+
     return Form(
       key: _formKey,
       child: Column(
@@ -94,13 +99,13 @@ class _NewTaskFormState extends State<NewTaskForm> {
             child: TextFormField(
               controller: _titleController,
               autofocus: true,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Title',
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: localization.title,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter a title';
+                  return localization.pleaseEnterTitle;
                 }
                 return null;
               },
@@ -112,9 +117,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Description',
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: localization.description,
               ),
             ),
           ),
@@ -125,12 +130,12 @@ class _NewTaskFormState extends State<NewTaskForm> {
             child: TextFormField(
               controller: _dueDateController,
               onTap: () {
-                _selectDueDate(context);
+                selectDueDate(context);
               },
               readOnly: true,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Due date',
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: localization.dueDate,
               ),
               
             ),
@@ -149,20 +154,21 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       dueDate: _dueDate,
                     ));
                   _resetForm();
+                  // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Task added!', style: TextStyle(color: Colors.white)),
+                    SnackBar(
+                      content: Text(localization.taskAdded, style: const TextStyle(color: Colors.white)),
                       backgroundColor: Colors.green,
                     )
                   );
                 }
               }, 
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:[
-                  Icon(Icons.add_circle),
-                  Text(' Add task')
+                  const Icon(Icons.add_circle),
+                  Text(' ${localization.addTask}')
                 ],
               )),
           )

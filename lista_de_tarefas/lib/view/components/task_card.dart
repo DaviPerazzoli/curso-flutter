@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskCard extends StatefulWidget {
   final Task _task;
-  final TodoListState state;
   final Function(int, bool)? onSelected;
   final bool inSelectionMode;
 
-  const TaskCard(this._task,{super.key, required this.state, this.onSelected, required this.inSelectionMode});
+  const TaskCard(this._task,{super.key, this.onSelected, required this.inSelectionMode});
 
   int get id => _task.id!;
 
@@ -22,16 +23,13 @@ class _TaskCardState extends State<TaskCard> {
   bool isExpanded = false;
 
   @override
-  void initState() {
-    isDone = widget._task.done;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    TodoListState state = context.watch<TodoListState>();
+    isDone = widget._task.done;
+
     void onDonePressed() {
       widget._task.done = !widget._task.done;
-      widget.state.updateTask(widget._task);
+      state.updateTask(widget._task);
       setState(() {
         isDone = widget._task.done;
       });
@@ -119,9 +117,9 @@ class _TaskCardState extends State<TaskCard> {
                       if (widget._task.description != null)
                         Text(widget._task.description!, style: taskDetailsStyle,),
                   
-                      Text('Creation date: ${widget._task.readableCreationDate}', style: taskDetailsStyle),
+                      Text('${AppLocalizations.of(context)!.creationDate}: ${widget._task.readableCreationDate}', style: taskDetailsStyle),
                       if (widget._task.dueDate != null)
-                        Text('Due date: ${widget._task.readableDueDate}', style: taskDetailsStyle?.merge(TextStyle(color: widget._task.isLate? Colors.red : taskDetailsStyle.color))),
+                        Text('${AppLocalizations.of(context)!.dueDate}: ${widget._task.readableDueDate}', style: taskDetailsStyle?.merge(TextStyle(color: widget._task.isLate? Colors.red : taskDetailsStyle.color))),
                     ],
                   ),
                 ), 

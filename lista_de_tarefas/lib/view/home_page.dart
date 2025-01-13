@@ -4,6 +4,7 @@ import 'package:lista_de_tarefas/view/components/page.dart';
 import 'package:lista_de_tarefas/view/components/tasks_page.dart';
 import 'package:lista_de_tarefas/view/components/new_task_page.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,24 +15,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
-  late final List<MyPage> pages;
-
-  @override
-  void initState() {
-    super.initState();
-    var state = context.read<TodoListState>();
-
-    pages = [
-        TasksPage(label: 'All tasks', icon: const Icon(Icons.task), onLoad: state.setAllTasks),
-        TasksPage(label: 'Done tasks', icon: const Icon(Icons.download_done_sharp), onLoad: state.setDoneTasks), 
-        const NewTaskPage(),
-    ];
-    pages[0].onLoad?.call();
-  }
-
+  bool firstTimeLoading = true;
 
   @override
   Widget build(BuildContext context) {
+    var state = context.read<TodoListState>();
+
+    List<MyPage> pages = [
+        TasksPage(label: AppLocalizations.of(context)!.allTasks, icon: const Icon(Icons.task), onLoad: state.setAllTasks),
+        TasksPage(label: AppLocalizations.of(context)!.doneTasks, icon: const Icon(Icons.download_done_sharp), onLoad: state.setDoneTasks), 
+        NewTaskPage(label: AppLocalizations.of(context)!.newTask,),
+    ];
+
+    if(firstTimeLoading) {
+      pages[0].onLoad?.call();
+      firstTimeLoading = false;
+    }
+    
     void onDestinationSelected(int value) {
       setState(() {
         pageIndex = value;

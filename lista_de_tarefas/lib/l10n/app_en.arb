@@ -1,0 +1,30 @@
+{
+    "appTitle": "Todo List",
+    "addTask": "Add task",
+    "allTasks": "All tasks",
+    "doneTasks": "Done tasks",
+    "newTask": "New task",
+    "deleteAllTasks": "Delete all tasks",
+    "cancel": "Cancel",
+    "ok": "Ok",
+    "selectDueDate": "Select the due date",
+    "selectDueTime": "Select the due time",
+    "title": "Title",
+    "pleaseEnterTitle": "Please enter a title",
+    "description": "Description",
+    "creationDate": "Creation date",
+    "dueDate": "Due date",
+    "taskAdded": "Task added!",
+    "noDueDate": "No due date",
+    "noTasksYet": "No tasks yet",
+    "nTasksSelected": "{count, plural, =1{1 task selected} other{{count} tasks selected}}",
+    "@nTasksSelected": {
+        "description": "Label telling the user how many tasks are selected",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    }
+}

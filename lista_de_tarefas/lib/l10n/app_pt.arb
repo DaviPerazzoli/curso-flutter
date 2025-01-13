@@ -1,0 +1,30 @@
+{
+    "appTitle": "Lista de tarefas",
+    "addTask": "Adicionar tarefa",
+    "allTasks": "Tarefas",
+    "doneTasks": "Tarefas completas",
+    "newTask": "Nova tarefa",
+    "deleteAllTasks": "Deletar todas as tarefas",
+    "cancel": "Cancelar",
+    "ok": "Ok",
+    "selectDueDate": "Selecionar data limite",
+    "selectDueTime": "Selecionar horário limite",
+    "title": "Título",
+    "pleaseEnterTitle": "Por favor, ensira um título",
+    "description": "Descrição",
+    "creationDate": "Data de criação",
+    "dueDate": "Data limite",
+    "taskAdded": "Tarefa adicionada!",
+    "noDueDate": "Sem data limite",
+    "noTasksYet": "Sem tarefas ainda",
+    "nTasksSelected": "{count, plural, =1{1 tarefa selecionada} other{{count} tarefas selecionadas}}",
+    "@nTasksSelected": {
+        "description": "Label telling the user how many tasks are selected",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    }
+}
