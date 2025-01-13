@@ -167,8 +167,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:[
-                  const Icon(Icons.add_circle),
-                  Text(' ${localization.addTask}')
+                  const Icon(Icons.add_circle, size: 25),
+                  Text(' ${localization.addTask}', style: const TextStyle(fontSize: 16),)
                 ],
               )),
           )

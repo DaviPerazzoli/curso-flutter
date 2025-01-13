@@ -26,8 +26,8 @@ class NewTaskPage extends StatelessWidget implements MyPage{
         const NewTaskForm(),
         ElevatedButton.icon(
           onPressed: state.deleteAllTasks,
-          label: Text(AppLocalizations.of(context)!.deleteAllTasks),
-          icon: const Icon(Icons.delete_forever),
+          label: Text(AppLocalizations.of(context)!.deleteAllTasks, style: const TextStyle(fontSize: 16),),
+          icon: const Icon(Icons.delete_forever, size: 30),
           ),
 
       ],

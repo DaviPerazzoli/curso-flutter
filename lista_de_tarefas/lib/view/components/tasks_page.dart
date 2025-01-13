@@ -122,7 +122,12 @@ class _TasksPageState extends State<TasksPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(selectionMenuText, style: const TextStyle(color: Colors.white),),
+                Text(selectionMenuText, 
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Theme.of(context).textTheme.titleLarge!.fontSize
+                  ),
+                ),
                 IconButton(onPressed: deleteSelected, icon: const Icon(Icons.delete_outline), color: Colors.white),
               ],
             ),
