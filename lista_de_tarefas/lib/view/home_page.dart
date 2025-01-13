@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/page.dart';
+import 'package:lista_de_tarefas/view/components/settings_page.dart';
 import 'package:lista_de_tarefas/view/components/tasks_page.dart';
 import 'package:lista_de_tarefas/view/components/new_task_page.dart';
 import 'package:provider/provider.dart';
@@ -21,10 +22,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var state = context.read<TodoListState>();
 
+    AppLocalizations localization = AppLocalizations.of(context)!;
     List<MyPage> pages = [
-        TasksPage(label: AppLocalizations.of(context)!.allTasks, icon: const Icon(Icons.task), onLoad: state.setAllTasks),
-        TasksPage(label: AppLocalizations.of(context)!.doneTasks, icon: const Icon(Icons.download_done_sharp), onLoad: state.setDoneTasks), 
-        NewTaskPage(label: AppLocalizations.of(context)!.newTask,),
+        TasksPage(label: localization.allTasks, icon: const Icon(Icons.task), onLoad: state.setAllTasks),
+        TasksPage(label: localization.doneTasks, icon: const Icon(Icons.download_done_sharp), onLoad: state.setDoneTasks), 
+        NewTaskPage(label: localization.newTask),
+        SettingsPage(label: localization.settings)
     ];
 
     if(firstTimeLoading) {

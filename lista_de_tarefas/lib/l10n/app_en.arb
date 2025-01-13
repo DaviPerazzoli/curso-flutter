@@ -27,5 +27,9 @@
                 "format": "compact"
             }
         }
-    }
+    },
+    "language": "Language",
+    "selectedLanguage": "Selected language",
+    "deviceLanguage": "Device language",
+    "settings": "Settings"
 }
