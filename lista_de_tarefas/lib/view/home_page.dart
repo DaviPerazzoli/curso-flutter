@@ -81,6 +81,8 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationBarItem(icon: p.icon,label: p.label),
           ],
           currentIndex: pageIndex,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Theme.of(context).hintColor,
           onTap: onDestinationSelected,
         
         ),

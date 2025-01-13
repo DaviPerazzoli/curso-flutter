@@ -28,14 +28,26 @@ class _LanguageSettingState extends State<LanguageSetting> {
       onTap: showSetting,
       child: Column(
         children: [
+          //* Setting title, icon and arrow_down
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Icon(Icons.language),
-              Expanded(child: Text(AppLocalizations.of(context)!.language)),
-              const Icon(Icons.keyboard_arrow_down),
+              Expanded(child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(AppLocalizations.of(context)!.language),
+              )),
+              AnimatedRotation(
+                turns: isExpanded? 0.5 : 0,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+                child: const Icon(Icons.keyboard_arrow_down),
+              ),
+              
             ],
           ),
+
+          //* Dropdown language settings
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Row(
@@ -63,7 +75,10 @@ class _LanguageSettingState extends State<LanguageSetting> {
               ],
             ), 
             crossFadeState: isExpanded? CrossFadeState.showSecond : CrossFadeState.showFirst, 
-            duration: const Duration(microseconds: 200))
+            duration: const Duration(milliseconds: 200),
+            firstCurve: Curves.easeIn,
+            secondCurve: Curves.easeIn,
+          )
         ],
       )
     );

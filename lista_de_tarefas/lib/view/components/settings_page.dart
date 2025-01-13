@@ -13,9 +13,12 @@ class SettingsPage extends StatelessWidget implements MyPage{
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).cardColor, width: 1),
+            border: Border.symmetric(horizontal: BorderSide(color:Theme.of(context).shadowColor, width:0.2)),
           ),
-          child: const LanguageSetting(),
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: LanguageSetting(),
+          ),
         )
       ],
     );

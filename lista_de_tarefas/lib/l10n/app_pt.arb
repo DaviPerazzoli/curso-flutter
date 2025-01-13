@@ -28,5 +28,8 @@
             }
         }
     },
-    "language": "Idioma"
+    "language": "Idioma",
+    "selectedLanguage": "Idioma selecionado",
+    "deviceLanguage": "Idioma do dispositivo",
+    "settings": "Configurações"
 }
