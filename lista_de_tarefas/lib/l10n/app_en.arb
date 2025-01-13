@@ -1,4 +1,5 @@
 {
+    "@@locale": "en",
     "appTitle": "Todo List",
     "addTask": "Add task",
     "allTasks": "All tasks",
