@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/page.dart';
@@ -60,13 +62,39 @@ class _TasksPageState extends State<TasksPage> {
     }
 
     void deleteSelected () {
-      for (var id in _selectedTaskCards) {
+      for (int id in _selectedTaskCards) {
         todoListState.deleteTask(id);
       }
       _selectedTaskCards.clear();
       setState(() {
         inSelectionMode = false;
       });
+    }
+
+    void showFilters () async {
+      log("Filters button clicked");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  localization.filters,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 20),
+                //* Para fechar: Navigator.of(context).pop();
+                // TODO Adicionar componentes do menu de filtros aqui
+              ],
+            ),
+          );
+        },
+      );
     }
 
     String selectionMenuText = localization.nTasksSelected(_selectedTaskCards.length);
@@ -78,6 +106,7 @@ class _TasksPageState extends State<TasksPage> {
       );
     }
 
+    //* É aqui que tenho que mexer para usar os filtros
     List<Column> viewTaskList = tasks.map<Column>((Task task) {
       if (tasks.indexOf(task) == 0 && task.dueDate == null) {
         return Column(
@@ -114,6 +143,7 @@ class _TasksPageState extends State<TasksPage> {
     
     return Column(
       children: [
+        //* Barra superior do modo de seleção
         AnimatedCrossFade(
           firstChild: const SizedBox.shrink(),
           secondChild: Container(
@@ -135,6 +165,22 @@ class _TasksPageState extends State<TasksPage> {
           crossFadeState: inSelectionMode? CrossFadeState.showSecond : CrossFadeState.showFirst,
           duration: const Duration(milliseconds: 200),
         ),
+        //* Barra superior com icones (por enquanto apenas filtros)
+        Container(
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color:Theme.of(context).shadowColor, width: 0.2)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+              IconButton(onPressed: showFilters, icon: const Icon(Icons.tune))
+            ],
+          ),
+        ),
+         
+        //* Lista de tasks
         Column(
           children: viewTaskList,
         ) 

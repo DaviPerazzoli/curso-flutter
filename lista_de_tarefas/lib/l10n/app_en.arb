@@ -31,5 +31,6 @@
     "language": "Language",
     "selectedLanguage": "Selected language",
     "deviceLanguage": "Device language",
-    "settings": "Settings"
+    "settings": "Settings",
+    "filters": "Filters"
 }
