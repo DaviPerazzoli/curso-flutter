@@ -32,5 +32,16 @@
     "selectedLanguage": "Selected language",
     "deviceLanguage": "Device language",
     "settings": "Settings",
-    "filters": "Filters"
+    "filters": "Filters",
+    "sortBy": "Sort by",
+    "select": "Select",
+    "bySelected": "By {selectedSort, select, other{don''t know} dueDate{due date} creationDate{creation date}}",
+    "@bySelected" : {
+        "description": "Label telling the user how the task list is being sorted",
+        "placeholders": {
+            "selectedSort": {
+                "type": "String"
+            }
+        }
+    }
 }

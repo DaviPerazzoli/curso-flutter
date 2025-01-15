@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
     AppLocalizations localization = AppLocalizations.of(context)!;
     List<MyPage> pages = [
-        TasksPage(label: localization.allTasks, icon: const Icon(Icons.task), onLoad: state.setAllTasks),
+        TasksPage(label: localization.allTasks, icon: const Icon(Icons.task), onLoad: state.setAllTasks, reverseSort: state.reverseSort, selectedSortByOption: state.selectedSortByOption),
         // TasksPage(label: localization.doneTasks, icon: const Icon(Icons.download_done_sharp), onLoad: state.setDoneTasks),
         NewTaskPage(label: localization.newTask),
         SettingsPage(label: localization.settings)

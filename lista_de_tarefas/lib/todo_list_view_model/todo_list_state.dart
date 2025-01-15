@@ -7,10 +7,13 @@ class TodoListState extends ChangeNotifier{
   TaskList taskList = TaskList.empty();
   String? errorMessage;
   Function? lastCalledTaskSet;
+  SortByOption selectedSortByOption = SortByOption.dueDate;
+  bool reverseSort = false;
 
   Future<void> setAllTasks () async {
     try{
       taskList = await _database.getAllTasks();
+      sortTasksBy(selectedSortByOption, reverseSort);
       log('All tasks set!');
     } catch (e) {
       errorMessage = 'Failed to load all tasks: $e';
@@ -24,6 +27,7 @@ class TodoListState extends ChangeNotifier{
   Future<void> setDoneTasks () async {
     try{
       taskList = await _database.getDoneTasks();
+      sortTasksBy(selectedSortByOption, reverseSort);
       log('Done tasks set!');
     } catch (e) {
       errorMessage = 'Faield to set done tasks: $e';
@@ -94,6 +98,19 @@ class TodoListState extends ChangeNotifier{
     } finally {
       notifyListeners();
       lastCalledTaskSet?.call();
+    }
+  }
+
+  void sortTasksBy (SortByOption opt, bool reverse) {
+    selectedSortByOption = opt;
+    reverseSort = reverse;
+    try {
+      taskList.sortBy(opt, reverse);
+    } catch (e) {
+      errorMessage = 'Failed to sort task list';
+      log(errorMessage!);
+    } finally {
+      notifyListeners();
     }
   }
 }

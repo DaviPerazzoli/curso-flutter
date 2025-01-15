@@ -37,5 +37,4 @@ class SettingsPage extends StatelessWidget implements MyPage{
   
   @override
   final Function? onLoad;
-
 }

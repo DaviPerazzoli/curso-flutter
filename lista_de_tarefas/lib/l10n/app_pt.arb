@@ -31,5 +31,17 @@
     "language": "Idioma",
     "selectedLanguage": "Idioma selecionado",
     "deviceLanguage": "Idioma do dispositivo",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "filters": "Filtros",
+    "sortBy": "Ordenado por",
+    "select": "Selecione",
+    "bySelected": "Por {selectedSort, select, other{não sei} dueDate{data limite} creationDate{data de criação}}",
+    "@bySelected" : {
+        "description": "Label telling the user how the task list is being sorted",
+        "placeholders": {
+            "selectedSort": {
+                "type": "String"
+            }
+        }
+    }
 }
