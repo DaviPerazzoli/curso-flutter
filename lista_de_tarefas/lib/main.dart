@@ -9,7 +9,9 @@ import 'app.dart';
 
 // TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
 // TODO Adicionar filtro na TasksPage: apenas done, apenas undone, atrasadas, não atrasadas, etc. (Necessário remover a done tasks)
-// TODO Futuramente, deixar o usuário criar páginas novas, para mostrar tarefas da forma que ele quiser (Através do filtro e escolhendo o ícone da página)
+// TODO Ideia: Futuramente, deixar o usuário criar páginas novas, para mostrar tarefas da forma que ele quiser (Através do filtro e escolhendo o ícone da página)
+// TODO Outra ideia, talvez mais interessante: Deixar o usuário criar quantas taskLists ele quiser: Uma de alimentação, treino, escola, etc.
+// TODO Outra ideia: Criar categorias pras tasks pro usuário filtrar por categoria
 
 void main() {
   // if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.windows || 
