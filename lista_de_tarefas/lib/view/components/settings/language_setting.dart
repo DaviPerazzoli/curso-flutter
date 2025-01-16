@@ -23,7 +23,6 @@ class _LanguageSettingDropdownState extends State<LanguageSettingDropdown> {
     "ar": "العربية",
   };
 
-
   @override
   Widget build(BuildContext context) {
     LocaleNotifier localeState = context.watch<LocaleNotifier>();
@@ -41,7 +40,7 @@ class _LanguageSettingDropdownState extends State<LanguageSettingDropdown> {
           items: AppLocalizations.supportedLocales.map((locale) {
             return DropdownMenuItem(
               value: locale,
-              child: Text(languages[locale.toString()]!),
+              child: Text(languages[locale.toString()] ?? 'Unexpected language: ${locale.toString()}'),
             );
           }).toList(), 
           onChanged: (value) {
