@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/locale_notifier.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
@@ -19,17 +21,6 @@ class MainApp extends StatelessWidget {
           locale: localeState.locale ?? WidgetsBinding.instance.platformDispatcher.locales.first,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          localeResolutionCallback: (locale, supportedLocales) {
-            for (Locale supportedLocale in supportedLocales) {
-              if (locale == null) return supportedLocales.first;
-
-              if (supportedLocale.countryCode == locale.countryCode &&
-              supportedLocale.languageCode == locale.languageCode) {
-                return supportedLocale;
-              }
-            }
-            return supportedLocales.first;
-          },
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
             useMaterial3: true,
