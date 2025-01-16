@@ -60,6 +60,7 @@ class _TasksPageState extends State<TasksPage> {
         builder: (BuildContext context) {
           return StatefulBuilder(builder: (context, setState) => 
             AlertDialog(
+              contentPadding: const EdgeInsets.all(16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -77,18 +78,19 @@ class _TasksPageState extends State<TasksPage> {
                       Expanded(child: Text(localization.sortBy)),
                       const SizedBox(width: 10),
                       DropdownButton(
+                        
                         value: selectedSortByOption,
                         hint: DropdownMenuItem(
-                            child: Text(localization.select)
+                            child: Text(localization.select, style: Theme.of(context).textTheme.bodyMedium)
                           ),
                         items: [
                           DropdownMenuItem(
                             value: SortByOption.dueDate,
-                            child: Text(localization.dueDate)
+                            child: Text(localization.dueDate, style: Theme.of(context).textTheme.bodyMedium)
                           ),
                           DropdownMenuItem(
                             value: SortByOption.creationDate,
-                            child: Text(localization.creationDate)
+                            child: Text(localization.creationDate, style: Theme.of(context).textTheme.bodyMedium)
                           ),
                         ], 
                         onChanged: (SortByOption? opt) {

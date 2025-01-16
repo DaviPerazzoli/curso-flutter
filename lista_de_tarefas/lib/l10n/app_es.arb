@@ -1,0 +1,47 @@
+{
+    "@@locale": "es",
+    "appTitle": "Lista de Tareas",
+    "addTask": "Agregar tarea",
+    "allTasks": "Todas las tareas",
+    "doneTasks": "Tareas completadas",
+    "newTask": "Nueva tarea",
+    "deleteAllTasks": "Eliminar todas las tareas",
+    "cancel": "Cancelar",
+    "ok": "Aceptar",
+    "selectDueDate": "Seleccionar la fecha de vencimiento",
+    "selectDueTime": "Seleccionar la hora de vencimiento",
+    "title": "Título",
+    "pleaseEnterTitle": "Por favor ingrese un título",
+    "description": "Descripción",
+    "creationDate": "Fecha de creación",
+    "dueDate": "Fecha de vencimiento",
+    "taskAdded": "¡Tarea agregada!",
+    "noDueDate": "Sin fecha de vencimiento",
+    "noTasksYet": "No hay tareas aún",
+    "nTasksSelected": "{count, plural, =1{1 tarea seleccionada} other{{count} tareas seleccionadas}}",
+    "@nTasksSelected": {
+        "description": "Etiqueta que indica cuántas tareas están seleccionadas",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "language": "Idioma",
+    "selectedLanguage": "Idioma seleccionado",
+    "deviceLanguage": "Idioma del dispositivo",
+    "settings": "Configuraciones",
+    "filters": "Filtros",
+    "sortBy": "Ordenar por",
+    "select": "Seleccionar",
+    "bySelected": "Por {selectedSort, select, other{no sé} dueDate{fecha de vencimiento} creationDate{fecha de creación}}",
+    "@bySelected": {
+        "description": "Etiqueta que indica cómo se está ordenando la lista de tareas",
+        "placeholders": {
+            "selectedSort": {
+                "type": "String"
+            }
+        }
+    }
+}

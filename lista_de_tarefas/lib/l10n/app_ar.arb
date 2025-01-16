@@ -1,0 +1,47 @@
+{
+    "@@locale": "ar",
+    "appTitle": "قائمة المهام",
+    "addTask": "إضافة مهمة",
+    "allTasks": "جميع المهام",
+    "doneTasks": "المهام المنجزة",
+    "newTask": "مهمة جديدة",
+    "deleteAllTasks": "حذف جميع المهام",
+    "cancel": "إلغاء",
+    "ok": "موافق",
+    "selectDueDate": "اختر تاريخ الاستحقاق",
+    "selectDueTime": "اختر وقت الاستحقاق",
+    "title": "العنوان",
+    "pleaseEnterTitle": "يرجى إدخال عنوان",
+    "description": "الوصف",
+    "creationDate": "تاريخ الإنشاء",
+    "dueDate": "تاريخ الاستحقاق",
+    "taskAdded": "تمت إضافة المهمة!",
+    "noDueDate": "لا يوجد تاريخ استحقاق",
+    "noTasksYet": "لا توجد مهام حتى الآن",
+    "nTasksSelected": "{count, plural, =1{تم اختيار مهمة واحدة} other{تم اختيار {count} مهام}}",
+    "@nTasksSelected": {
+        "description": "تسمية تخبر المستخدم بعدد المهام المختارة",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "language": "اللغة",
+    "selectedLanguage": "اللغة المختارة",
+    "deviceLanguage": "لغة الجهاز",
+    "settings": "الإعدادات",
+    "filters": "الفلاتر",
+    "sortBy": "ترتيب حسب",
+    "select": "اختر",
+    "bySelected": "حسب {selectedSort, select, other{غير معروف} dueDate{تاريخ الاستحقاق} creationDate{تاريخ الإنشاء}}",
+    "@bySelected": {
+        "description": "تسمية تخبر المستخدم بكيفية ترتيب قائمة المهام",
+        "placeholders": {
+            "selectedSort": {
+                "type": "String"
+            }
+        }
+    }
+}

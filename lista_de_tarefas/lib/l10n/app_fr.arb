@@ -1,0 +1,47 @@
+{
+    "@@locale": "fr",
+    "appTitle": "Liste de Tâches",
+    "addTask": "Ajouter une tâche",
+    "allTasks": "Toutes les tâches",
+    "doneTasks": "Tâches terminées",
+    "newTask": "Nouvelle tâche",
+    "deleteAllTasks": "Supprimer toutes les tâches",
+    "cancel": "Annuler",
+    "ok": "OK",
+    "selectDueDate": "Sélectionner la date d''échéance",
+    "selectDueTime": "Sélectionner l''heure d''échéance",
+    "title": "Titre",
+    "pleaseEnterTitle": "Veuillez entrer un titre",
+    "description": "Description",
+    "creationDate": "Date de création",
+    "dueDate": "Date d''échéance",
+    "taskAdded": "Tâche ajoutée !",
+    "noDueDate": "Pas de date d''échéance",
+    "noTasksYet": "Pas encore de tâches",
+    "nTasksSelected": "{count, plural, =1{1 tâche sélectionnée} other{{count} tâches sélectionnées}}",
+    "@nTasksSelected": {
+        "description": "Libellé indiquant combien de tâches sont sélectionnées",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "language": "Langue",
+    "selectedLanguage": "Langue sélectionnée",
+    "deviceLanguage": "Langue de l''appareil",
+    "settings": "Paramètres",
+    "filters": "Filtres",
+    "sortBy": "Trier par",
+    "select": "Sélectionner",
+    "bySelected": "Par {selectedSort, select, other{je ne sais pas} dueDate{date d''échéance} creationDate{date de création}}",
+    "@bySelected": {
+        "description": "Libellé indiquant comment la liste des tâches est triée",
+        "placeholders": {
+            "selectedSort": {
+                "type": "String"
+            }
+        }
+    }
+}

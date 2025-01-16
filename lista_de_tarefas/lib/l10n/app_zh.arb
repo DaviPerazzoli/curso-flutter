@@ -1,0 +1,47 @@
+{
+    "@@locale": "zh",
+    "appTitle": "任务清单",
+    "addTask": "添加任务",
+    "allTasks": "所有任务",
+    "doneTasks": "已完成的任务",
+    "newTask": "新任务",
+    "deleteAllTasks": "删除所有任务",
+    "cancel": "取消",
+    "ok": "确定",
+    "selectDueDate": "选择截止日期",
+    "selectDueTime": "选择截止时间",
+    "title": "标题",
+    "pleaseEnterTitle": "请输入标题",
+    "description": "描述",
+    "creationDate": "创建日期",
+    "dueDate": "截止日期",
+    "taskAdded": "任务已添加！",
+    "noDueDate": "无截止日期",
+    "noTasksYet": "还没有任务",
+    "nTasksSelected": "{count, plural, =1{选择了 1 个任务} other{选择了 {count} 个任务}}",
+    "@nTasksSelected": {
+        "description": "标签告诉用户选择了多少任务",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "language": "语言",
+    "selectedLanguage": "选择的语言",
+    "deviceLanguage": "设备语言",
+    "settings": "设置",
+    "filters": "过滤器",
+    "sortBy": "排序方式",
+    "select": "选择",
+    "bySelected": "按 {selectedSort, select, other{未知} dueDate{截止日期} creationDate{创建日期}}",
+    "@bySelected": {
+        "description": "标签告诉用户任务列表的排序方式",
+        "placeholders": {
+            "selectedSort": {
+                "type": "String"
+            }
+        }
+    }
+}

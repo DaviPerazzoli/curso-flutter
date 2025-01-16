@@ -1,0 +1,47 @@
+{
+    "@@locale": "ru",
+    "appTitle": "Список задач",
+    "addTask": "Добавить задачу",
+    "allTasks": "Все задачи",
+    "doneTasks": "Выполненные задачи",
+    "newTask": "Новая задача",
+    "deleteAllTasks": "Удалить все задачи",
+    "cancel": "Отмена",
+    "ok": "ОК",
+    "selectDueDate": "Выбрать дату выполнения",
+    "selectDueTime": "Выбрать время выполнения",
+    "title": "Название",
+    "pleaseEnterTitle": "Пожалуйста, введите название",
+    "description": "Описание",
+    "creationDate": "Дата создания",
+    "dueDate": "Дата выполнения",
+    "taskAdded": "Задача добавлена!",
+    "noDueDate": "Без даты выполнения",
+    "noTasksYet": "Задач пока нет",
+    "nTasksSelected": "{count, plural, =1{1 задача выбрана} other{{count} задачи выбраны}}",
+    "@nTasksSelected": {
+        "description": "Метка, указывающая, сколько задач выбрано",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "language": "Язык",
+    "selectedLanguage": "Выбранный язык",
+    "deviceLanguage": "Язык устройства",
+    "settings": "Настройки",
+    "filters": "Фильтры",
+    "sortBy": "Сортировать по",
+    "select": "Выбрать",
+    "bySelected": "По {selectedSort, select, other{не знаю} dueDate{дате выполнения} creationDate{дате создания}}",
+    "@bySelected": {
+        "description": "Метка, указывающая, как отсортирован список задач",
+        "placeholders": {
+            "selectedSort": {
+                "type": "String"
+            }
+        }
+    }
+}

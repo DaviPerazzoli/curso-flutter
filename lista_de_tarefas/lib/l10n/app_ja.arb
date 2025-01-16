@@ -1,0 +1,47 @@
+{
+    "@@locale": "ja",
+    "appTitle": "タスクリスト",
+    "addTask": "タスクを追加",
+    "allTasks": "すべてのタスク",
+    "doneTasks": "完了したタスク",
+    "newTask": "新しいタスク",
+    "deleteAllTasks": "すべてのタスクを削除",
+    "cancel": "キャンセル",
+    "ok": "OK",
+    "selectDueDate": "期日を選択",
+    "selectDueTime": "期限時間を選択",
+    "title": "タイトル",
+    "pleaseEnterTitle": "タイトルを入力してください",
+    "description": "説明",
+    "creationDate": "作成日",
+    "dueDate": "期日",
+    "taskAdded": "タスクが追加されました！",
+    "noDueDate": "期日なし",
+    "noTasksYet": "まだタスクがありません",
+    "nTasksSelected": "{count, plural, =1{1件のタスクが選択されました} other{{count}件のタスクが選択されました}}",
+    "@nTasksSelected": {
+        "description": "選択されているタスクの数を示すラベル",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "language": "言語",
+    "selectedLanguage": "選択された言語",
+    "deviceLanguage": "デバイスの言語",
+    "settings": "設定",
+    "filters": "フィルター",
+    "sortBy": "並べ替え",
+    "select": "選択",
+    "bySelected": "{selectedSort, select, other{不明} dueDate{期日} creationDate{作成日}}で並べ替え",
+    "@bySelected": {
+        "description": "タスクリストがどのように並べ替えられているかを示すラベル",
+        "placeholders": {
+            "selectedSort": {
+                "type": "String"
+            }
+        }
+    }
+}
