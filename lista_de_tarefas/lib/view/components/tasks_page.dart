@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/page.dart';
@@ -9,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class TasksPage extends StatefulWidget implements MyPage{
-  TasksPage({super.key, required this.label, required this.icon, this.onLoad, required this.reverseSort, required this.selectedSortByOption});
+  const TasksPage({super.key, required this.label, required this.icon, this.onLoad});
 
   @override
   final String label;
@@ -22,10 +21,6 @@ class TasksPage extends StatefulWidget implements MyPage{
 
   @override
   State<TasksPage> createState() => _TasksPageState();
-  
-  bool? reverseSort;
-  
-  SortByOption? selectedSortByOption;
 }
 
 class _TasksPageState extends State<TasksPage> {
@@ -33,111 +28,19 @@ class _TasksPageState extends State<TasksPage> {
   bool inSelectionMode = false;
   bool shouldDisplayDate = false;
   DateTime? previousDate;
-  late SortByOption selectedSortByOption = widget.selectedSortByOption ?? SortByOption.dueDate;
-  late bool reverseSort = widget.reverseSort ?? false;
+  late SortByOption selectedSortByOption;
+  late bool reverseSort;
 
-  List<Column> _getTaskCardListByDueDate (List<Task> tasks, AppLocalizations localization) {
-    bool reachedNoDueDate = false;
-    previousDate = null;
-    return tasks.map<Column>((Task task) {
-
-      if (task.dueDate == null) {
-        previousDate = null;
-        if (!reachedNoDueDate) {
-          reachedNoDueDate = true;
-          return Column(
-            children: [
-              Center(child: Text(localization.noDueDate)),
-              TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
-            ],
-          );
-        } else {
-          return Column(
-            children: [
-              TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
-            ],
-          );
-        }
-      } else {
-        shouldDisplayDate = false;
-
-        DateTime? dueDateNoTime = DateTime(task.dueDate!.year, task.dueDate!.month, task.dueDate!.day);
-        if (previousDate == null) {
-          shouldDisplayDate = true;
-        } else {
-          
-          if (!dueDateNoTime.isAtSameMomentAs(previousDate!)) {
-            shouldDisplayDate = true;
-          }
-        }
-        previousDate = dueDateNoTime;
-      }
-
-      return Column(
-        children: [
-          if (shouldDisplayDate)
-            Center(child: Text(task.readableDueDate.split(' ')[0]),),
-          TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
-        ],
-      );
-    }).toList();
-  }
-
-  List<Column> _getTaskCardListByCreationDate (List<Task> tasks, AppLocalizations localization) {
-    previousDate = null;
-    return tasks.map<Column>((Task task) {
-      shouldDisplayDate = false;
-
-      DateTime creationDateNoTime = DateTime(task.creationDate.year, task.creationDate.month, task.creationDate.day);
-      if (previousDate == null) {
-        shouldDisplayDate = true;
-      } else {
-        
-        if (!creationDateNoTime.isAtSameMomentAs(previousDate!)) {
-          shouldDisplayDate = true;
-        }
-      }
-      previousDate = creationDateNoTime;
-
-      return Column(
-        children: [
-          if (shouldDisplayDate)
-            Center(child: Text(task.readableCreationDate.split(' ')[0]),),
-          TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
-        ],
-      );
-    }).toList();
-  }
-
-  void _onSelected(int id, bool isSelected) {
-    if (!inSelectionMode) {
-      setState(() {
-        inSelectionMode = true;
-      });
-    }
-    
-    if (!isSelected) {
-      setState(() {
-        _selectedTaskCards.remove(id);
-      });
-      
-    } else {
-      setState(() {
-        _selectedTaskCards.add(id);
-      });
-    }
-
-    if (_selectedTaskCards.isEmpty) {
-      setState(() {
-        inSelectionMode = false;
-      });
-    }
+  @override
+  void initState() {
+    var state = context.read<TodoListState>();
+    selectedSortByOption = state.selectedSortByOption;
+    reverseSort = state.reverseSort;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    widget.reverseSort = reverseSort;
-    widget.selectedSortByOption = selectedSortByOption;
     var todoListState = context.watch<TodoListState>();
     AppLocalizations localization = AppLocalizations.of(context)!;
 
@@ -306,5 +209,103 @@ class _TasksPageState extends State<TasksPage> {
           
       ]
     );
+  }
+
+  List<Column> _getTaskCardListByDueDate (List<Task> tasks, AppLocalizations localization) {
+    bool reachedNoDueDate = false;
+    previousDate = null;
+    return tasks.map<Column>((Task task) {
+
+      if (task.dueDate == null) {
+        previousDate = null;
+        if (!reachedNoDueDate) {
+          reachedNoDueDate = true;
+          return Column(
+            children: [
+              Center(child: Text(localization.noDueDate)),
+              TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
+            ],
+          );
+        } else {
+          return Column(
+            children: [
+              TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
+            ],
+          );
+        }
+      } else {
+        shouldDisplayDate = false;
+
+        DateTime? dueDateNoTime = DateTime(task.dueDate!.year, task.dueDate!.month, task.dueDate!.day);
+        if (previousDate == null) {
+          shouldDisplayDate = true;
+        } else {
+          
+          if (!dueDateNoTime.isAtSameMomentAs(previousDate!)) {
+            shouldDisplayDate = true;
+          }
+        }
+        previousDate = dueDateNoTime;
+      }
+
+      return Column(
+        children: [
+          if (shouldDisplayDate)
+            Center(child: Text(task.readableDueDate.split(' ')[0]),),
+          TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
+        ],
+      );
+    }).toList();
+  }
+
+  List<Column> _getTaskCardListByCreationDate (List<Task> tasks, AppLocalizations localization) {
+    previousDate = null;
+    return tasks.map<Column>((Task task) {
+      shouldDisplayDate = false;
+
+      DateTime creationDateNoTime = DateTime(task.creationDate.year, task.creationDate.month, task.creationDate.day);
+      if (previousDate == null) {
+        shouldDisplayDate = true;
+      } else {
+        
+        if (!creationDateNoTime.isAtSameMomentAs(previousDate!)) {
+          shouldDisplayDate = true;
+        }
+      }
+      previousDate = creationDateNoTime;
+
+      return Column(
+        children: [
+          if (shouldDisplayDate)
+            Center(child: Text(task.readableCreationDate.split(' ')[0]),),
+          TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
+        ],
+      );
+    }).toList();
+  }
+
+  void _onSelected(int id, bool isSelected) {
+    if (!inSelectionMode) {
+      setState(() {
+        inSelectionMode = true;
+      });
+    }
+    
+    if (!isSelected) {
+      setState(() {
+        _selectedTaskCards.remove(id);
+      });
+      
+    } else {
+      setState(() {
+        _selectedTaskCards.add(id);
+      });
+    }
+
+    if (_selectedTaskCards.isEmpty) {
+      setState(() {
+        inSelectionMode = false;
+      });
+    }
   }
 }
