@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/page.dart';
 import 'package:lista_de_tarefas/view/components/settings_page.dart';
+import 'package:lista_de_tarefas/view/components/task_lists_page.dart';
 import 'package:lista_de_tarefas/view/components/tasks_page.dart';
 import 'package:lista_de_tarefas/view/components/new_task_page.dart';
 import 'package:provider/provider.dart';
@@ -24,8 +25,9 @@ class _HomePageState extends State<HomePage> {
 
     AppLocalizations localization = AppLocalizations.of(context)!;
     List<MyPage> pages = [
-        TasksPage(label: localization.allTasks, icon: const Icon(Icons.task), onLoad: state.setAllTasks),
-        // TasksPage(label: localization.doneTasks, icon: const Icon(Icons.download_done_sharp), onLoad: state.setDoneTasks),
+        TaskListsPage(label: localization.taskLists, icon: const Icon(Icons.table_rows_sharp), onLoad: state.setAllTaskLists,),
+        // TODO arrumar isso
+        TasksPage(label: localization.allTasks, icon: const Icon(Icons.task), onLoad:(){state.setAllTasks(state.selectedTaskList?.id ?? 1);}),
         NewTaskPage(label: localization.newTask),
         SettingsPage(label: localization.settings)
     ];

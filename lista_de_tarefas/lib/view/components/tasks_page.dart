@@ -31,6 +31,31 @@ class _TasksPageState extends State<TasksPage> {
   late SortByOption selectedSortByOption;
   late bool reverseSort;
 
+  void _onSelected(int id, bool isSelected) {
+    if (!inSelectionMode) {
+      setState(() {
+        inSelectionMode = true;
+      });
+    }
+    
+    if (!isSelected) {
+      setState(() {
+        _selectedTaskCards.remove(id);
+      });
+      
+    } else {
+      setState(() {
+        _selectedTaskCards.add(id);
+      });
+    }
+
+    if (_selectedTaskCards.isEmpty) {
+      setState(() {
+        inSelectionMode = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     var state = context.read<TodoListState>();
@@ -292,28 +317,5 @@ class _TasksPageState extends State<TasksPage> {
     }).toList();
   }
 
-  void _onSelected(int id, bool isSelected) {
-    if (!inSelectionMode) {
-      setState(() {
-        inSelectionMode = true;
-      });
-    }
-    
-    if (!isSelected) {
-      setState(() {
-        _selectedTaskCards.remove(id);
-      });
-      
-    } else {
-      setState(() {
-        _selectedTaskCards.add(id);
-      });
-    }
-
-    if (_selectedTaskCards.isEmpty) {
-      setState(() {
-        inSelectionMode = false;
-      });
-    }
-  }
+  
 }

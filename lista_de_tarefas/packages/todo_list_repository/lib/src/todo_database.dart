@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'todo_model.dart';
@@ -33,7 +35,6 @@ class TodoDatabase {
     const textType = 'TEXT';
     const boolType = 'INTEGER NOT NULL';
     const intType = 'INTEGER NOT NULL';
-    const dateTimeType = 'TEXT NOT NULL';
 
     await db.execute('''
       CREATE TABLE taskLists (
@@ -47,7 +48,7 @@ class TodoDatabase {
         id $idType,
         title $textNotnullType,
         description $textType,
-        creationDate $dateTimeType,
+        creationDate $textNotnullType,
         dueDate $textType,
         done $boolType,
         taskListId $intType,
@@ -62,7 +63,6 @@ class TodoDatabase {
     const textType = 'TEXT';
     const boolType = 'INTEGER NOT NULL';
     const intType = 'INTEGER NOT NULL';
-    const dateTimeType = 'TEXT NOT NULL';
     if (oldVersion == 1) {
       //* Cria a nova tabela taskLists
       await db.execute('''
@@ -74,7 +74,7 @@ class TodoDatabase {
       ''');
 
       // 2. Inserir uma lista padrão para associar às tasks existentes
-      await db.insert('taskLists', {'name': 'Default', 'color': '#FFFFFF'});
+      await db.insert('taskLists', {'name': 'Default', 'color': 0xFFFFFF});
 
       // 3. Criar uma nova tabela tasks com a foreign key
       await db.execute('''
@@ -82,8 +82,8 @@ class TodoDatabase {
           id $idType,
           title $textNotnullType,
           description $textType,
-          creationDate $dateTimeType,
-          dueDate $dateTimeType,
+          creationDate $textNotnullType,
+          dueDate $textType,
           done $boolType,
           taskListId $intType,
           FOREIGN KEY (taskListId) REFERENCES taskLists(id) ON DELETE CASCADE
@@ -125,15 +125,16 @@ class TodoDatabase {
   Future<TaskList?> getTaskList(int taskListId) async {
     final db = await database;
     final result = await db.query('tasks');
-    final taskLists = await db.query('taskLists');
     List<Task> tasks = [];
     for (var map in result) {
       if (map["taskListId"] == taskListId) {
         tasks.add(Task.fromMap(map));
       }
     }
+
+    final taskLists = await db.query('taskLists');
     for (var map in taskLists) {
-      if (map["taskListId"] == taskListId) {
+      if (map["id"] == taskListId) {
         return TaskList.fromMap(map, tasks);
       }
     }
@@ -180,9 +181,28 @@ class TodoDatabase {
     final result = await db.query('taskLists');
     List<TaskList> allTaskLists = [];
     for(var map in result) {
+
       allTaskLists.add((await getTaskList(map['id'] as int))!);
+
     }
 
     return allTaskLists;
   }
+
+  Future<void> _debugDB() async {
+  final db = await database;
+
+  final taskLists = await db.query('taskLists');
+  log('TASK LISTS:');
+  for (var taskList in taskLists) {
+    log('\t$taskList');
+  }
+
+  final tasks = await db.query('tasks');
+  log('TASKS:');
+  for (var task in tasks) {
+    log('\t$task');
+  }
+}
+
 }

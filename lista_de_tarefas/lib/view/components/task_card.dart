@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
+import 'package:lista_de_tarefas/view/components/card.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TaskCard extends StatefulWidget {
+class TaskCard extends StatefulWidget implements MyCard{
   final Task _task;
+
+  @override
   final Function(int, bool)? onSelected;
+
+  @override
   final bool inSelectionMode;
 
   const TaskCard(this._task,{super.key, this.onSelected, required this.inSelectionMode});
 
+  @override
   int get id => _task.id!;
 
   @override
@@ -21,6 +27,19 @@ class _TaskCardState extends State<TaskCard> {
   bool isSelected = false;
   late bool isDone;
   bool isExpanded = false;
+
+  void onCardSelected () {
+    setState(() {
+        isSelected = !isSelected;
+    });
+    widget.onSelected?.call(widget.id, isSelected);
+  }
+
+  void showTaskDetails () {
+    setState(() {
+      isExpanded = !isExpanded;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,19 +54,6 @@ class _TaskCardState extends State<TaskCard> {
       });
     }
 
-    void onCardSelected () {
-      setState(() {
-          isSelected = !isSelected;
-      });
-      widget.onSelected?.call(widget.id, isSelected);
-    }
-
-    void showTaskDetails () {
-      setState(() {
-        isExpanded = !isExpanded;
-      });
-    }
-    
     // This is necessary when excluding task cards
     if (!widget.inSelectionMode) {
       setState(() {

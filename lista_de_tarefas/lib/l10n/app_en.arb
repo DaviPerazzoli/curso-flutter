@@ -44,5 +44,17 @@
             }
         }
     },
-    "noTaskListSelected": "No task list selected..."
+    "noTaskListSelected": "No task list selected...",
+    "noTaskLists": "No task lists...",
+    "nTaskListsSelected": "{count, plural, =1{1 task list selected} other{{count} task lists selected}}",
+    "@nTaskListsSelected": {
+        "description": "Label telling the user how many task lists are selected",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "taskLists": "Task lists"
 }

@@ -21,10 +21,8 @@ class TaskList {
     required this.color}
   ): _id = id;
 
-  factory TaskList.fromMap(Map<String, dynamic> map, List<Task> tasks) {
-    String strColor = map["color"];
-    
-    return TaskList.fromExistent(tasks, id: map["id"], name: map["name"], color: Color(int.parse(strColor, radix: 16)));
+  factory TaskList.fromMap(Map<String, dynamic> map, List<Task> tasks) {    
+    return TaskList.fromExistent(tasks, id: map["id"], name: map["name"], color: Color(map['color']));
   }
 
   Map<String, dynamic> toMap() {
