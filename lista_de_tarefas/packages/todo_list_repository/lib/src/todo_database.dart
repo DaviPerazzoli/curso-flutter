@@ -19,25 +19,90 @@ class TodoDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filepath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(
+      path, 
+      version: 2, 
+      onCreate: _createDB,
+      onUpgrade: _upgradeDB,
+    );
   }
 
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    const textType = 'TEXT NOT NULL';
+    const textNotnullType = 'TEXT NOT NULL';
+    const textType = 'TEXT';
     const boolType = 'INTEGER NOT NULL';
+    const intType = 'INTEGER NOT NULL';
     const dateTimeType = 'TEXT NOT NULL';
 
     await db.execute('''
-      CREATE TABLE tasks (
+      CREATE TABLE taskLists (
         id $idType,
-        title $textType,
-        description TEXT,
-        creationDate $dateTimeType,
-        dueDate TEXT,
-        done $boolType
+        name $textNotnullType,
+        color $intType
       )
     ''');
+    await db.execute('''
+      CREATE TABLE tasks (
+        id $idType,
+        title $textNotnullType,
+        description $textType,
+        creationDate $dateTimeType,
+        dueDate $textType,
+        done $boolType,
+        taskListId $intType,
+        FOREIGN KEY (taskListId) REFERENCES taskLists(id) ON DELETE CASCADE
+      )
+    ''');
+  }
+
+  Future<void> _upgradeDB (Database db, int oldVersion, int newVersion) async {
+    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    const textNotnullType = 'TEXT NOT NULL';
+    const textType = 'TEXT';
+    const boolType = 'INTEGER NOT NULL';
+    const intType = 'INTEGER NOT NULL';
+    const dateTimeType = 'TEXT NOT NULL';
+    if (oldVersion == 1) {
+      //* Cria a nova tabela taskLists
+      await db.execute('''
+        CREATE TABLE taskLists (
+          id $idType,
+          name $textNotnullType,
+          color $intType
+        )
+      ''');
+
+      // 2. Inserir uma lista padrão para associar às tasks existentes
+      await db.insert('taskLists', {'name': 'Default', 'color': '#FFFFFF'});
+
+      // 3. Criar uma nova tabela tasks com a foreign key
+      await db.execute('''
+        CREATE TABLE tasks_new (
+          id $idType,
+          title $textNotnullType,
+          description $textType,
+          creationDate $dateTimeType,
+          dueDate $dateTimeType,
+          done $boolType,
+          taskListId $intType,
+          FOREIGN KEY (taskListId) REFERENCES taskLists(id) ON DELETE CASCADE
+        )
+      ''');
+
+      //* Migrar os dados da tabela antiga (tasks) para a nova tabela
+      await db.execute('''
+        INSERT INTO tasks_new (id, title, description, creationDate, dueDate, done, taskListId)
+        SELECT id, title, description, creationDate, dueDate, done, 1 as taskListId
+        FROM tasks;
+      ''');
+
+      //* Excluir a tabela antiga
+      await db.execute('DROP TABLE tasks');
+
+      //* Renomear a nova tabela para 'tasks'
+      await db.execute('ALTER TABLE tasks_new RENAME TO tasks');
+    }
   }
 
   Future close() async {
@@ -51,22 +116,23 @@ class TodoDatabase {
     return id;
   }
 
-  Future<TaskList> getAllTasks() async {
+  Future<TaskList?> getTaskList(int taskListId) async {
     final db = await database;
     final result = await db.query('tasks');
-    return TaskList(result.map((json) => Task.fromMap(json)).toList());
-  }
-
-  Future<TaskList> getDoneTasks() async {
-    final db = await database;
-    final result = await db.query('tasks');
-    List<Task> taskList = [];
-    for (var element in result) {
-      if (element['done'] == 1) {
-        taskList.add(Task.fromMap(element));
+    final taskLists = await db.query('taskLists');
+    List<Task> tasks = [];
+    for (var map in result) {
+      if (map["taskListId"] == taskListId) {
+        tasks.add(Task.fromMap(map));
       }
     }
-    return TaskList(taskList);
+    for (var map in taskLists) {
+      if (map["taskListId"] == taskListId) {
+        return TaskList.fromMap(map, tasks);
+      }
+    }
+
+    return null;
   }
 
   Future<int> updateTask(Task task) async {
@@ -83,9 +149,20 @@ class TodoDatabase {
     );
   }
 
-  Future clearTasks() async {
+  Future<void> clearTasks() async {
     final db = await database;
     await db.delete('tasks');
     await db.execute('DELETE FROM sqlite_sequence WHERE name = "tasks"');
+  }
+
+  Future<List<TaskList>> getAllTaskLists () async {
+    final db = await database;
+    final result = await db.query('taskLists');
+    List<TaskList> allTaskLists = [];
+    for(var map in result) {
+      allTaskLists.add((await getTaskList(map['id'] as int))!);
+    }
+
+    return allTaskLists;
   }
 }

@@ -4,15 +4,28 @@ import 'package:todo_list_repository/todo_list_repository.dart';
 
 class TodoListState extends ChangeNotifier{
   final TodoDatabase _database = TodoDatabase.instance;
-  TaskList taskList = TaskList.empty();
+  List<TaskList> taskLists = [];
+  TaskList? selectedTaskList;
   String? errorMessage;
   Function? lastCalledTaskSet;
   SortByOption selectedSortByOption = SortByOption.dueDate;
   bool reverseSort = false;
 
-  Future<void> setAllTasks () async {
+  Future<void> setAllTaskLists () async {
+    try {
+      taskLists = await _database.getAllTaskLists();
+      log('All taskLists set!');
+    } catch (e) {
+      errorMessage = 'Failed to set all task lists: $e';
+      log(errorMessage!);
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<void> setAllTasks (int taskListId) async {
     try{
-      taskList = await _database.getAllTasks();
+      selectedTaskList = await _database.getTaskList(taskListId);
       sortTasksBy(selectedSortByOption, reverseSort);
       log('All tasks set!');
     } catch (e) {
@@ -23,26 +36,12 @@ class TodoListState extends ChangeNotifier{
       notifyListeners();
     }
   }
-  
-  Future<void> setDoneTasks () async {
-    try{
-      taskList = await _database.getDoneTasks();
-      sortTasksBy(selectedSortByOption, reverseSort);
-      log('Done tasks set!');
-    } catch (e) {
-      errorMessage = 'Faield to set done tasks: $e';
-      log(errorMessage!);
-    } finally {
-      lastCalledTaskSet = setDoneTasks;
-      notifyListeners();
-    }
-  }
 
   Future<void> addTask (Task task) async {
     try {
       int id = await _database.createTask(task);
       task.id = id;
-      taskList.add(task);
+      selectedTaskList!.add(task);
       log('Task with id ${task.id} added!');
     } catch (e) {
       errorMessage = 'Failed to add task: $e';
@@ -58,9 +57,9 @@ class TodoListState extends ChangeNotifier{
       int affectedRows = await _database.updateTask(task);
       
       if (affectedRows > 0) {
-        int index = taskList.tasks.indexWhere((element) => element.id == task.id);
+        int index = selectedTaskList!.tasks.indexWhere((element) => element.id == task.id);
         if (index != -1) {
-          taskList.tasks[index] = task;
+          selectedTaskList!.tasks[index] = task;
           log('Updated task with id ${task.id}');
         } else {
           log('The updated task is not in the list');
@@ -105,7 +104,7 @@ class TodoListState extends ChangeNotifier{
     selectedSortByOption = opt;
     reverseSort = reverse;
     try {
-      taskList.sortBy(opt, reverse);
+      selectedTaskList!.sortBy(opt, reverse);
     } catch (e) {
       errorMessage = 'Failed to sort task list';
       log(errorMessage!);

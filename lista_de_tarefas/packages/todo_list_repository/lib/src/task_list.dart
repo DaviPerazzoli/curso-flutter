@@ -1,13 +1,43 @@
+import 'dart:ui';
+
 import 'todo_model.dart';
 
 class TaskList {
   final List<Task> _tasks;
+  String name;
+  int? _id;
+  Color color;
 
-  TaskList(
+  int? get id => _id;
+
+  set id(int? id) {
+    _id = id;
+  }
+
+  TaskList.fromExistent(
     this._tasks,
-  );
+    {required int id,
+    required this.name,
+    required this.color}
+  ): _id = id;
 
-  TaskList.empty(): _tasks = [];
+  factory TaskList.fromMap(Map<String, dynamic> map, List<Task> tasks) {
+    String strColor = map["color"];
+    
+    return TaskList.fromExistent(tasks, id: map["id"], name: map["name"], color: Color(int.parse(strColor, radix: 16)));
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': _id,
+      'name': name,
+      // ignore: deprecated_member_use
+      'color': color.value
+    };
+  }
+
+  // ignore: unnecessary_constructor_name
+  TaskList.new({required this.name, required this.color, int? id}): _tasks = [], _id = id;
 
   void add(Task task) {
     if(!_tasks.contains(task)){

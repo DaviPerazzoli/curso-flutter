@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/locale_notifier.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
@@ -14,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     LocaleNotifier localeState = context.watch<LocaleNotifier>();
 
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider<TodoListState>(
       create: (context) => TodoListState(),
       child: MaterialApp(
           title: 'Todo list',

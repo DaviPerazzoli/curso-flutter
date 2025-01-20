@@ -140,7 +140,7 @@ class _TasksPageState extends State<TasksPage> {
 
     String selectionMenuText = localization.nTasksSelected(_selectedTaskCards.length);
 
-    var tasks = todoListState.taskList.tasks;
+    var tasks = todoListState.selectedTaskList.tasks;
     if (tasks.isEmpty) {
       return Center(
         child: Text(localization.noTasksYet),

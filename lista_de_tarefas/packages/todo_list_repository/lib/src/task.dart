@@ -5,13 +5,15 @@ class Task {
   DateTime _creationDate;
   DateTime? _dueDate;
   bool _done;
+  int _taskListId;
 
   Task.create({
     int? id,
     required String title,
     String? description,
     DateTime? dueDate,
-  }): _dueDate = dueDate, _description = description, _id = id, _title = title, 
+    required int taskListId
+  }): _dueDate = dueDate, _description = description, _id = id, _title = title, _taskListId = taskListId,
     _creationDate = DateTime.now(),
     _done = false;
 
@@ -21,8 +23,9 @@ class Task {
     String? description,
     DateTime? dueDate,
     required DateTime creationDate,
-    required bool done
-  }) : _done = done, _dueDate = dueDate, _creationDate = creationDate, _description = description, _id = id, _title = title;
+    required bool done,
+    required int taskListId
+  }) : _done = done, _dueDate = dueDate, _creationDate = creationDate, _description = description, _id = id, _title = title, _taskListId = taskListId;
 
   int? get id {
     return _id;
@@ -108,6 +111,7 @@ class Task {
       "creationDate" : _creationDate.toIso8601String(),
       "dueDate" : _dueDate?.toIso8601String(),
       "done" : _done ? 1 : 0,
+      "taskListId": _taskListId
     };
   }
 
@@ -119,6 +123,7 @@ class Task {
       creationDate: DateTime.parse(map['creationDate']),
       done: map['done'] == 1? true: false,
       dueDate: map['dueDate'] != null ? DateTime.parse(map['dueDate']) : null,
+      taskListId: map["taskListId"],
     );
   }
 
