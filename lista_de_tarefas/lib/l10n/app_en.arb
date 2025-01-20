@@ -43,5 +43,6 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "noTaskListSelected": "No task list selected..."
 }

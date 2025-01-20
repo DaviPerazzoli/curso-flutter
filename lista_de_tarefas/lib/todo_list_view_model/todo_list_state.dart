@@ -52,6 +52,20 @@ class TodoListState extends ChangeNotifier{
     }
   }
 
+  Future<void> addTaskList (TaskList taskList) async {
+    try {
+      int id = await _database.createTaskList(taskList);
+      taskList.id = id;
+      taskLists.add(taskList);
+      log('TaskList with id ${taskList.id} added!');
+    } catch (e) {
+      errorMessage = 'Failed to add task list: $e';
+      log(errorMessage!);
+    } finally {
+      notifyListeners();
+    }
+  }
+
   Future<void> updateTask (Task task) async {
      try {
       int affectedRows = await _database.updateTask(task);
@@ -65,9 +79,30 @@ class TodoListState extends ChangeNotifier{
           log('The updated task is not in the list');
         }
       }
-      
     } catch (e) {
       errorMessage = 'Failed to update task: $e';
+      log(errorMessage!);
+    } finally {
+      notifyListeners();
+      lastCalledTaskSet?.call();
+    }
+  }
+
+  Future<void> updateTaskList (TaskList taskList) async {
+     try {
+      int affectedRows = await _database.updateTaskList(taskList);
+      
+      if (affectedRows > 0) {
+        int index = taskLists.indexWhere((element) => element.id == taskList.id);
+        if (index != -1) {
+          taskLists[index] = taskList;
+          log('Updated task list with id ${taskList.id}');
+        } else {
+          log('The updated task list is not in the list');
+        }
+      }
+    } catch (e) {
+      errorMessage = 'Failed to update task list: $e';
       log(errorMessage!);
     } finally {
       notifyListeners();
@@ -84,6 +119,17 @@ class TodoListState extends ChangeNotifier{
     } finally {
       notifyListeners();
       lastCalledTaskSet?.call();
+    }
+  }
+
+  Future<void> deleteTaskList(int id) async {
+    try {
+      _database.deleteTaskList(id);
+    } catch (e) {
+      errorMessage = 'Failed to delete task list: $e';
+      log(errorMessage!);
+    } finally {
+      notifyListeners();
     }
   }
 

@@ -116,6 +116,12 @@ class TodoDatabase {
     return id;
   }
 
+  Future<int> createTaskList(TaskList taskList) async {
+    final db = await database;
+    final id = db.insert('taskLists', taskList.toMap());
+    return id;
+  }
+
   Future<TaskList?> getTaskList(int taskListId) async {
     final db = await database;
     final result = await db.query('tasks');
@@ -140,10 +146,24 @@ class TodoDatabase {
     return await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
   }
 
+  Future<int> updateTaskList(TaskList taskList) async {
+    final db = await database;
+    return await db.update('taskLists', taskList.toMap(), where: 'id = ?', whereArgs: [taskList.id]);
+  }
+
   Future<int> deleteTask(int id) async {
     final db = await database;
     return await db.delete(
       'tasks',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<int> deleteTaskList(int id) async {
+    final db = await database;
+    return await db.delete(
+      'taskLists',
       where: 'id = ?',
       whereArgs: [id],
     );

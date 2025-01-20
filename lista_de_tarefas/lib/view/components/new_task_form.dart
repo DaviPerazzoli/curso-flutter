@@ -86,6 +86,10 @@ class _NewTaskFormState extends State<NewTaskForm> {
       _updateDueDateField();
     }
 
+    if (state.selectedTaskList == null) {
+      return Center(child: Text(localization.noTaskListSelected));
+    }
+
     return Form(
       key: _formKey,
       child: Column(
@@ -152,6 +156,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       title: _titleController.text,
                       description: _descriptionController.text,
                       dueDate: _dueDate,
+                      taskListId: state.selectedTaskList!.id!
                     ));
                   _resetForm();
                   // ignore: use_build_context_synchronously
