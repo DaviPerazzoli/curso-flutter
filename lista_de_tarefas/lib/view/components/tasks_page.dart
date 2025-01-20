@@ -224,7 +224,14 @@ class _TasksPageState extends State<TasksPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
-              IconButton(onPressed: showFilters, icon: const Icon(Icons.tune))
+              //* Nome da task list
+              Expanded(child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(todoListState.selectedTaskList!.name, style: Theme.of(context).textTheme.titleMedium),
+              )),
+
+              //* Botão de filtragem
+              IconButton(onPressed: showFilters, icon: const Icon(Icons.tune)),
             ],
           ),
         ),

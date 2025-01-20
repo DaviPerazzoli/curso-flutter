@@ -189,6 +189,7 @@ class TodoDatabase {
     return allTaskLists;
   }
 
+  // ignore: unused_element
   Future<void> _debugDB() async {
   final db = await database;
 
