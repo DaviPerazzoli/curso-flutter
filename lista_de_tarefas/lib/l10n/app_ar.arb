@@ -43,5 +43,25 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "noTaskListSelected": "لم يتم اختيار قائمة مهام...",
+    "noTaskLists": "لا توجد قوائم مهام...",
+    "nTaskListsSelected": "{count, plural, =1{تم اختيار قائمة مهام واحدة} other{تم اختيار {count} قوائم مهام}}",
+    "@nTaskListsSelected": {
+        "description": "تسمية تخبر المستخدم بعدد قوائم المهام المختارة",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "taskLists": "قوائم المهام",
+    "name": "الاسم",
+    "pleaseEnterName": "يرجى إدخال اسم",
+    "color": "اللون",
+    "taskListAdded": "تمت إضافة قائمة المهام!",
+    "addTaskList": "إضافة قائمة مهام",
+    "pickAColor": "اختر لونًا",
+    "newTaskList": "قائمة مهام جديدة"
 }

@@ -43,5 +43,25 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "noTaskListSelected": "タスクリストが選択されていません...",
+    "noTaskLists": "タスクリストがありません...",
+    "nTaskListsSelected": "{count, plural, =1{1 つのタスクリストが選択されました} other{{count} つのタスクリストが選択されました}}",
+    "@nTaskListsSelected": {
+        "description": "選択されたタスクリストの数を示すラベル",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "taskLists": "タスクリスト",
+    "name": "名前",
+    "pleaseEnterName": "名前を入力してください",
+    "color": "色",
+    "taskListAdded": "タスクリストが追加されました！",
+    "addTaskList": "タスクリストを追加",
+    "pickAColor": "色を選択",
+    "newTaskList": "新しいタスクリスト"
 }

@@ -43,5 +43,25 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "noTaskListSelected": "Aucune liste de tâches sélectionnée...",
+    "noTaskLists": "Aucune liste de tâches...",
+    "nTaskListsSelected": "{count, plural, =1{1 liste de tâches sélectionnée} other{{count} listes de tâches sélectionnées}}",
+    "@nTaskListsSelected": {
+        "description": "Libellé indiquant combien de listes de tâches sont sélectionnées",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "taskLists": "Listes de tâches",
+    "name": "Nom",
+    "pleaseEnterName": "Veuillez entrer un nom",
+    "color": "Couleur",
+    "taskListAdded": "Liste de tâches ajoutée !",
+    "addTaskList": "Ajouter une liste de tâches",
+    "pickAColor": "Choisissez une couleur",
+    "newTaskList": "Nouvelle liste de tâches"
 }

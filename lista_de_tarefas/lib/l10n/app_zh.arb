@@ -43,5 +43,25 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "noTaskListSelected": "未选择任务列表...",
+    "noTaskLists": "没有任务列表...",
+    "nTaskListsSelected": "{count, plural, =1{选择了 1 个任务列表} other{选择了 {count} 个任务列表}}",
+    "@nTaskListsSelected": {
+        "description": "标签告诉用户选择了多少个任务列表",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "taskLists": "任务列表",
+    "name": "名称",
+    "pleaseEnterName": "请输入名称",
+    "color": "颜色",
+    "taskListAdded": "任务列表已添加！",
+    "addTaskList": "添加任务列表",
+    "pickAColor": "选择颜色",
+    "newTaskList": "新任务列表"
 }

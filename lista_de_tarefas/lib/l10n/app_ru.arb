@@ -43,5 +43,25 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "noTaskListSelected": "Список задач не выбран...",
+    "noTaskLists": "Нет списков задач...",
+    "nTaskListsSelected": "{count, plural, =1{Выбран 1 список задач} other{Выбрано {count} списков задач}}",
+    "@nTaskListsSelected": {
+        "description": "Метка, указывающая, сколько списков задач выбрано",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "taskLists": "Списки задач",
+    "name": "Имя",
+    "pleaseEnterName": "Пожалуйста, введите имя",
+    "color": "Цвет",
+    "taskListAdded": "Список задач добавлен!",
+    "addTaskList": "Добавить список задач",
+    "pickAColor": "Выберите цвет",
+    "newTaskList": "Новый список задач"
 }
