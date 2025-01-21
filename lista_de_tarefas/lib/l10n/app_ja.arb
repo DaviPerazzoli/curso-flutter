@@ -63,5 +63,9 @@
     "taskListAdded": "タスクリストが追加されました！",
     "addTaskList": "タスクリストを追加",
     "pickAColor": "色を選択",
-    "newTaskList": "新しいタスクリスト"
+    "newTaskList": "新しいタスクリスト",
+    "taskUpdated": "タスクが更新されました！",
+    "editTask": "タスクを編集",
+    "taskListUpdated": "タスクリストが更新されました！",
+    "editTaskList": "タスクリストを編集"
 }

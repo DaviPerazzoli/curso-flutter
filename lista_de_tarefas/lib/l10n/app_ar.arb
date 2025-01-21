@@ -63,5 +63,9 @@
     "taskListAdded": "تمت إضافة قائمة المهام!",
     "addTaskList": "إضافة قائمة مهام",
     "pickAColor": "اختر لونًا",
-    "newTaskList": "قائمة مهام جديدة"
+    "newTaskList": "قائمة مهام جديدة",
+    "taskUpdated": "تم تحديث المهمة!",
+    "editTask": "تحرير المهمة",
+    "taskListUpdated": "تم تحديث قائمة المهام!",
+    "editTaskList": "تحرير قائمة المهام"
 }

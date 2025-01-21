@@ -63,5 +63,9 @@
     "taskListAdded": "Список задач добавлен!",
     "addTaskList": "Добавить список задач",
     "pickAColor": "Выберите цвет",
-    "newTaskList": "Новый список задач"
+    "newTaskList": "Новый список задач",
+    "taskUpdated": "Задача обновлена!",
+    "editTask": "Редактировать задачу",
+    "taskListUpdated": "Список задач обновлен!",
+    "editTaskList": "Редактировать список задач"
 }
