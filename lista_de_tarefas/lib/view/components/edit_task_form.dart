@@ -4,16 +4,18 @@ import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class NewTaskForm extends StatefulWidget {
-  const NewTaskForm({super.key, this.onSubmit});
+class EditTaskForm extends StatefulWidget {
+  const EditTaskForm({super.key, this.onSubmit, required Task task}): _task = task;
 
   final VoidCallback? onSubmit;
 
+  final Task _task;
+
   @override
-  State<NewTaskForm> createState() => _NewTaskFormState();
+  State<EditTaskForm> createState() => _EditTaskFormState();
 }
 
-class _NewTaskFormState extends State<NewTaskForm> {
+class _EditTaskFormState extends State<EditTaskForm> {
   
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
@@ -41,6 +43,15 @@ class _NewTaskFormState extends State<NewTaskForm> {
 
   void _updateDueDateField(){
     _dueDateController.text = _dueDate != null? '${_dueDate!.month}/${_dueDate!.day}/${_dueDate!.year}' : '';
+  }
+
+  @override
+  void initState() {
+    _dueDate = widget._task.dueDate;
+    _titleController.text = widget._task.title;
+    _descriptionController.text = widget._task.description ?? '';
+    _updateDueDateField();
+    super.initState();
   }
 
   @override
@@ -96,6 +107,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
 
           //* Task title field
@@ -153,7 +165,10 @@ class _NewTaskFormState extends State<NewTaskForm> {
               style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8))),
               onPressed:() async {
                 if (_formKey.currentState!.validate()) {
-                  await state.addTask(Task.create(
+                  await state.updateTask(Task.fromExistent(
+                      id: widget._task.id,
+                      creationDate: widget._task.creationDate,
+                      done: widget._task.done,
                       title: _titleController.text,
                       description: _descriptionController.text,
                       dueDate: _dueDate,
@@ -162,7 +177,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   _resetForm();
                   scaffoldMessenger.showSnackBar(
                     SnackBar(
-                      content: Text(localization.taskAdded, style: const TextStyle(color: Colors.white)),
+                      content: Text(localization.taskUpdated, style: const TextStyle(color: Colors.white)),
                       backgroundColor: Colors.green,
                     )
                   );
@@ -173,8 +188,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:[
-                  const Icon(Icons.add_circle, size: 25),
-                  Text(' ${localization.addTask}', style: const TextStyle(fontSize: 16),)
+                  const Icon(Icons.edit, size: 25),
+                  Text(' ${localization.editTask}', style: const TextStyle(fontSize: 16),)
                 ],
               )
             ),

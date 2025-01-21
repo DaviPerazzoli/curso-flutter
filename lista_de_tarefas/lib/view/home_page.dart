@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
           }
         ));
       } else if (isSeeingTasks) {
-        page = SafeArea( child: TasksPage(
+        page = SafeArea( child: SingleChildScrollView(child: TasksPage(
           label: localization.allTasks, 
           icon: const Icon(Icons.task), 
           onAddTask: () {
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
               isSeeingTasks = false;
             });
           }
-        ));
+        )));
       } else {
         page = SafeArea(child: SingleChildScrollView(child: pages[pageIndex]));
       }

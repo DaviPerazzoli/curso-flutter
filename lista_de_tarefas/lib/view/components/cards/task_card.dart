@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/cards/card.dart';
+import 'package:lista_de_tarefas/view/components/edit_task_form.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -106,7 +107,8 @@ class _TaskCardState extends State<TaskCard> {
                       style: taskTitleStyle,
                     ),
                   ),
-              
+
+                  IconButton(onPressed: () {_showEditTaskDialog(context);}, icon: const Icon(Icons.edit)),
                   //* Done/undone button
                   IconButton(onPressed: onDonePressed, icon: Icon(Icons.done, color: doneIconColor)),
                 ],
@@ -149,6 +151,20 @@ class _TaskCardState extends State<TaskCard> {
           ),
         ),
       )
+    );
+  }
+
+  void _showEditTaskDialog(BuildContext context) {
+    showDialog(
+      context: context, 
+      builder: (context) => AlertDialog(
+        content: EditTaskForm(
+          task: widget._task, 
+          onSubmit: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
     );
   }
 }
