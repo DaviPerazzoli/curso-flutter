@@ -165,19 +165,16 @@ class _TasksPageState extends State<TasksPage> {
     }
 
     if (todoListState.selectedTaskList == null) {
-      return Center(
-        child: Text(localization.noTaskListSelected),
-      );
+      return Center(child: Text(localization.noTaskListSelected));
     }
 
+    Center noTasksMessage = Center(
+        child: Text(localization.noTasksYet),
+    );
+    
     String selectionMenuText = localization.nTasksSelected(_selectedTaskCards.length);
 
     var tasks = todoListState.selectedTaskList!.tasks;
-    if (tasks.isEmpty) {
-      return Center(
-        child: Text(localization.noTasksYet),
-      );
-    }
 
     //* Lógica decidindo se vai mostrar a data de criação ou conclusão da tarefa
     List<Column> viewTaskList;
@@ -249,7 +246,7 @@ class _TasksPageState extends State<TasksPage> {
          
         //* Lista de tasks
         Column(
-          children: viewTaskList,
+          children: tasks.isEmpty ? [noTasksMessage] : viewTaskList,
         ),
       ]
     );

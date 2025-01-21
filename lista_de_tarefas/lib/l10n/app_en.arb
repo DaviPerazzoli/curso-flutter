@@ -56,5 +56,12 @@
             }
         }
     },
-    "taskLists": "Task lists"
+    "taskLists": "Task lists",
+    "name": "Name",
+    "pleaseEnterName": "Please enter a name",
+    "color": "Color",
+    "taskListAdded": "Task list added!",
+    "addTaskList": "Add task list",
+    "pickAColor": "Pick a color",
+    "newTaskList": "New task list"
 }

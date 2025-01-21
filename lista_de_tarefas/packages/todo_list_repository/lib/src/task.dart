@@ -87,6 +87,8 @@ class Task {
     return false;
   }
 
+  int get taskListId => _taskListId;
+
   String _2digitNumber (int number) {
     return number > 9? number.toString() : '0$number';
   }

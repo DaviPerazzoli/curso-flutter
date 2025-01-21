@@ -58,7 +58,7 @@ class _TaskListsPageState extends State<TaskListsPage> {
 
     void deleteSelected () {
       for (int id in _selectedTaskListCards) {
-        state.deleteTask(id);
+        state.deleteTaskList(id);
       }
       _selectedTaskListCards.clear();
       setState(() {

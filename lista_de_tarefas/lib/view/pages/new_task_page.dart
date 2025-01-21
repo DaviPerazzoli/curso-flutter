@@ -18,7 +18,7 @@ class NewTaskPage extends StatelessWidget implements MyPage{
 
   @override
   Widget build(BuildContext context) {
-    // TODO fazer a task ser adicionada na task list certa
+
     return Column(
       children: [
         Container(

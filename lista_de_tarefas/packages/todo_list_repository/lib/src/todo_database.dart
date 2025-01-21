@@ -161,12 +161,18 @@ class TodoDatabase {
     );
   }
 
-  Future<int> deleteTaskList(int id) async {
+  Future<void> deleteTaskList(int id) async {
     final db = await database;
-    return await db.delete(
+    await db.delete(
       'taskLists',
       where: 'id = ?',
       whereArgs: [id],
+    );
+
+    await db.delete(
+      'tasks',
+      where: 'taskListId = ?',
+      whereArgs: [id]
     );
   }
 
@@ -191,19 +197,19 @@ class TodoDatabase {
 
   // ignore: unused_element
   Future<void> _debugDB() async {
-  final db = await database;
+    final db = await database;
 
-  final taskLists = await db.query('taskLists');
-  log('TASK LISTS:');
-  for (var taskList in taskLists) {
-    log('\t$taskList');
-  }
+    final taskLists = await db.query('taskLists');
+    log('TASK LISTS:');
+    for (var taskList in taskLists) {
+      log('\t$taskList');
+    }
 
-  final tasks = await db.query('tasks');
-  log('TASKS:');
-  for (var task in tasks) {
-    log('\t$task');
+    final tasks = await db.query('tasks');
+    log('TASKS:');
+    for (var task in tasks) {
+      log('\t$task');
+    }
   }
-}
 
 }

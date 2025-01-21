@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
+import 'package:lista_de_tarefas/view/pages/new_tasklist_page.dart';
 import 'package:lista_de_tarefas/view/pages/page.dart';
 import 'package:lista_de_tarefas/view/pages/settings_page.dart';
 import 'package:lista_de_tarefas/view/pages/task_lists_page.dart';
@@ -27,18 +28,16 @@ class _HomePageState extends State<HomePage> {
     AppLocalizations localization = AppLocalizations.of(context)!;
     List<MyPage> pages = [
         TaskListsPage(label: localization.taskLists, icon: const Icon(Icons.table_rows_sharp), onLoad: state.setAllTaskLists,),
-        // TODO arrumar isso: pages: taskListsPage, newTaskList, settings
-        // TODO NewTasksPage tem que ser acessada por dentro da sua respectiva TasksPage
         TasksPage(
           label: localization.allTasks, 
           icon: const Icon(Icons.task), 
-          onLoad:(){state.setAllTasks(state.selectedTaskList?.id ?? 1);},
           onAddTask: () {
             setState(() {
               isAddingTask = true;
             });
           }
         ),
+        NewTaskListPage(label: localization.newTaskList),
         SettingsPage(label: localization.settings)
     ];
 

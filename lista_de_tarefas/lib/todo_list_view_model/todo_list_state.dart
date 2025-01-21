@@ -47,8 +47,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Failed to add task: $e';
       log(errorMessage!);
     } finally {
-      notifyListeners();
-      lastCalledTaskSet?.call();
+      lastCalledTaskSet?.call(selectedTaskList!.id!);
     }
   }
 
@@ -62,7 +61,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Failed to add task list: $e';
       log(errorMessage!);
     } finally {
-      notifyListeners();
+      setAllTaskLists();
     }
   }
 
@@ -83,8 +82,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Failed to update task: $e';
       log(errorMessage!);
     } finally {
-      notifyListeners();
-      lastCalledTaskSet?.call();
+      lastCalledTaskSet?.call(selectedTaskList!.id!);
     }
   }
 
@@ -105,8 +103,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Failed to update task list: $e';
       log(errorMessage!);
     } finally {
-      notifyListeners();
-      lastCalledTaskSet?.call();
+      setAllTaskLists();
     }
   }
 
@@ -117,8 +114,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Failed to delete task: $e';
       log(errorMessage!);
     } finally {
-      notifyListeners();
-      lastCalledTaskSet?.call();
+      lastCalledTaskSet?.call(selectedTaskList!.id!);
     }
   }
 
@@ -129,7 +125,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Failed to delete task list: $e';
       log(errorMessage!);
     } finally {
-      notifyListeners();
+      setAllTaskLists();
     }
   }
 
@@ -141,8 +137,7 @@ class TodoListState extends ChangeNotifier{
       errorMessage = 'Failed to delete all tasks: $e';
       log(errorMessage!);
     } finally {
-      notifyListeners();
-      lastCalledTaskSet?.call();
+      lastCalledTaskSet?.call(selectedTaskList!.id!);
     }
   }
 
