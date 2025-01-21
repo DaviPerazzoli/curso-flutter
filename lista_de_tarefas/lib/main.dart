@@ -8,10 +8,7 @@ import 'app.dart';
 // import 'package:flutter/foundation.dart';
 
 // TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
-// TODO Adicionar filtro na TasksPage: apenas done, apenas undone, atrasadas, não atrasadas, etc. (Necessário remover a done tasks)
-// TODO Ideia: Futuramente, deixar o usuário criar páginas novas, para mostrar tarefas da forma que ele quiser (Através do filtro e escolhendo o ícone da página)
-// TODO Outra ideia, talvez mais interessante: Deixar o usuário criar quantas taskLists ele quiser: Uma de alimentação, treino, escola, etc.
-// TODO Outra ideia: Criar categorias pras tasks pro usuário filtrar por categoria
+// TODO Fazer a tasksPage aparecer quando o usuário clica na taskList e remover da barra de navegação
 
 void main() {
   // if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.windows || 
