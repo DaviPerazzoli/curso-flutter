@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
   bool firstTimeLoading = true;
   bool isAddingTask = false;
+  bool isSeeingTasks = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +28,15 @@ class _HomePageState extends State<HomePage> {
 
     AppLocalizations localization = AppLocalizations.of(context)!;
     List<MyPage> pages = [
-        TaskListsPage(label: localization.taskLists, icon: const Icon(Icons.table_rows_sharp), onLoad: state.setAllTaskLists,),
-        TasksPage(
-          label: localization.allTasks, 
-          icon: const Icon(Icons.task), 
-          onAddTask: () {
+        TaskListsPage(
+          label: localization.taskLists, 
+          icon: const Icon(Icons.table_rows_sharp), 
+          onLoad: state.setAllTaskLists, 
+          onTaskListTap: () {
             setState(() {
-              isAddingTask = true;
+              isSeeingTasks = true;
             });
-          }
+          },
         ),
         NewTaskListPage(label: localization.newTaskList),
         SettingsPage(label: localization.settings)
@@ -49,22 +50,42 @@ class _HomePageState extends State<HomePage> {
     void onDestinationSelected(int value) {
       setState(() {
         pageIndex = value;
+        isAddingTask = false;
+        isSeeingTasks = false;
       });
       pages[value].onLoad?.call();
     }
 
-
     //* Lógica de qual página vai aparecer
     Widget page;
     try {
-      page = isAddingTask? SafeArea( child: NewTaskPage(
-        label: localization.newTask,
-        onCancel: () {
-          setState(() {
-            isAddingTask = false;
-          });
-        }
-      )) : SafeArea(child: SingleChildScrollView(child: pages[pageIndex]));
+      if (isAddingTask) {
+        page = SafeArea( child: NewTaskPage(
+          label: localization.newTask,
+          onCancel: () {
+            setState(() {
+              isAddingTask = false;
+            });
+          }
+        ));
+      } else if (isSeeingTasks) {
+        page = SafeArea( child: TasksPage(
+          label: localization.allTasks, 
+          icon: const Icon(Icons.task), 
+          onAddTask: () {
+            setState(() {
+              isAddingTask = true;
+            });
+          },
+          onCancel: () {
+            setState(() {
+              isSeeingTasks = false;
+            });
+          }
+        ));
+      } else {
+        page = SafeArea(child: SingleChildScrollView(child: pages[pageIndex]));
+      }
     } on IndexError {
       throw UnimplementedError('No widget for $pageIndex');
     }

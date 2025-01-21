@@ -7,6 +7,7 @@ import 'app.dart';
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // import 'package:flutter/foundation.dart';
 
+// TODO Acrescentar edição de tasks e tasklists
 // TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
 // TODO Fazer a tasksPage aparecer quando o usuário clica na taskList e remover da barra de navegação
 // TODO Atualizar o estilo das TaskListCard

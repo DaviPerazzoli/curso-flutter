@@ -10,9 +10,11 @@ class TodoListState extends ChangeNotifier{
   Function? lastCalledTaskSet;
   SortByOption selectedSortByOption = SortByOption.dueDate;
   bool reverseSort = false;
+  bool isLoading = false;
 
   Future<void> setAllTaskLists () async {
     try {
+      isLoading = true;
       taskLists = await _database.getAllTaskLists();
       log('All taskLists set!');
     } catch (e) {
@@ -20,11 +22,13 @@ class TodoListState extends ChangeNotifier{
       log(errorMessage!);
     } finally {
       notifyListeners();
+      isLoading = false;
     }
   }
 
   Future<void> setAllTasks (int taskListId) async {
     try{
+      isLoading = true;
       selectedTaskList = await _database.getTaskList(taskListId);
       sortTasksBy(selectedSortByOption, reverseSort);
       log('All tasks set!');
@@ -34,6 +38,7 @@ class TodoListState extends ChangeNotifier{
     } finally {
       lastCalledTaskSet = setAllTasks;
       notifyListeners();
+      isLoading = false;
     }
   }
 

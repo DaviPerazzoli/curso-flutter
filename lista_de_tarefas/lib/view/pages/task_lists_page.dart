@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskListsPage extends StatefulWidget implements MyPage{
-  const TaskListsPage({super.key, required this.label, required this.icon, this.onLoad});
+  const TaskListsPage({super.key, required this.label, required this.icon, this.onLoad, required this.onTaskListTap});
+
+  final VoidCallback onTaskListTap;
 
   @override
   final String label;
@@ -73,7 +75,7 @@ class _TaskListsPageState extends State<TaskListsPage> {
     String selectionMenuText = localization.nTaskListsSelected(_selectedTaskListCards.length);
 
     List<TaskListCard> viewTaskLists = state.taskLists.map(
-      (TaskList taskList) => TaskListCard(taskList, onSelected: _onSelected, inSelectionMode: inSelectionMode)
+      (TaskList taskList) => TaskListCard(taskList, onSelected: _onSelected, inSelectionMode: inSelectionMode, onTap: widget.onTaskListTap)
     ).toList();
 
     return Column(

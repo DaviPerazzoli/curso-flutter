@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 
 class TaskListCard extends StatefulWidget implements MyCard{
-  const TaskListCard(this._taskList, {super.key, this.onSelected, required this.inSelectionMode});
+  const TaskListCard(this._taskList, {super.key, this.onSelected, required this.inSelectionMode, required this.onTap});
 
   final TaskList _taskList;
+
+  final VoidCallback onTap;
 
   @override
   final Function(int, bool)? onSelected;
@@ -53,7 +55,7 @@ class _TaskListCardState extends State<TaskListCard> {
           onCardSelected();
         } else {
           state.setAllTasks(widget._taskList.id!);
-          // TODO fazer aparecer a tasks_page dessa taskList, podendo voltar
+          widget.onTap();
         }
       },
       //* Padding outside the card
@@ -67,7 +69,7 @@ class _TaskListCardState extends State<TaskListCard> {
             color: cardColor,
             border: Border.all(color: widget._taskList.color,),
           ),
-          padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
+          padding: const EdgeInsets.all(16),
           //* Card content
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

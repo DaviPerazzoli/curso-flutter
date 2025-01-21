@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/pages/page.dart';
 import 'package:lista_de_tarefas/view/components/cards/task_card.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TasksPage extends StatefulWidget implements MyPage{
-  const TasksPage({super.key, required this.label, required this.icon, this.onLoad, required this.onAddTask});
+  const TasksPage({super.key, required this.label, required this.icon, this.onLoad, required this.onAddTask, required this.onCancel});
 
   @override
   final String label;
@@ -19,6 +20,8 @@ class TasksPage extends StatefulWidget implements MyPage{
   final Function? onLoad;
 
   final VoidCallback onAddTask;
+
+  final VoidCallback onCancel;
 
   @override
   State<TasksPage> createState() => _TasksPageState();
@@ -168,23 +171,28 @@ class _TasksPageState extends State<TasksPage> {
       return Center(child: Text(localization.noTaskListSelected));
     }
 
-    Center noTasksMessage = Center(
-        child: Text(localization.noTasksYet),
-    );
-    
     String selectionMenuText = localization.nTasksSelected(_selectedTaskCards.length);
 
     var tasks = todoListState.selectedTaskList!.tasks;
 
     //* Lógica decidindo se vai mostrar a data de criação ou conclusão da tarefa
-    List<Column> viewTaskList;
+    List<Column> orderedTaskCards;
     switch (selectedSortByOption) {
       case SortByOption.dueDate:
-        viewTaskList = _getTaskCardListByDueDate(tasks, localization);
+        orderedTaskCards = _getTaskCardListByDueDate(tasks, localization);
         break;
       case SortByOption.creationDate:
-        viewTaskList = _getTaskCardListByCreationDate(tasks, localization);
+        orderedTaskCards = _getTaskCardListByCreationDate(tasks, localization);
         break;
+    }
+
+    List<Widget> taskListView;
+    if (todoListState.isLoading) {
+      taskListView = [Center(child: LoadingAnimationWidget.discreteCircle(color: Theme.of(context).primaryColor, size: 30))];
+    } else if (tasks.isEmpty) {
+      taskListView = [Center( child: Text(localization.noTasksYet))];
+    } else {
+      taskListView = orderedTaskCards;
     }
     
     return Column(
@@ -222,6 +230,8 @@ class _TasksPageState extends State<TasksPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              //* Botão voltar
+              IconButton(onPressed: widget.onCancel, icon: const Icon(Icons.arrow_back)),
 
               //* Nome da task list
               Expanded(child: Padding(
@@ -246,7 +256,7 @@ class _TasksPageState extends State<TasksPage> {
          
         //* Lista de tasks
         Column(
-          children: tasks.isEmpty ? [noTasksMessage] : viewTaskList,
+          children: taskListView,
         ),
       ]
     );
