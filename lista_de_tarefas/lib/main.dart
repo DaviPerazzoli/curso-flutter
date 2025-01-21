@@ -9,6 +9,7 @@ import 'app.dart';
 
 // TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
 // TODO Fazer a tasksPage aparecer quando o usuário clica na taskList e remover da barra de navegação
+// TODO Atualizar o estilo das TaskListCard
 
 void main() {
   // if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.windows || 

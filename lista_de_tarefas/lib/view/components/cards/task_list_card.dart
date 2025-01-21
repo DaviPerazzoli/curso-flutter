@@ -65,7 +65,7 @@ class _TaskListCardState extends State<TaskListCard> {
             borderRadius: BorderRadius.circular(8),
             boxShadow: kElevationToShadow[4],
             color: cardColor,
-            border: Border.all(color: widget._taskList.color, width: 0.2),
+            border: Border.all(color: widget._taskList.color,),
           ),
           padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
           //* Card content
