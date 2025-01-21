@@ -61,7 +61,7 @@ class TodoListState extends ChangeNotifier{
       int id = await _database.createTaskList(taskList);
       taskList.id = id;
       taskLists.add(taskList);
-      log('TaskList with id ${taskList.id} added!');
+      log('Task list with id ${taskList.id} added!');
     } catch (e) {
       errorMessage = 'Failed to add task list: $e';
       log(errorMessage!);
@@ -115,6 +115,7 @@ class TodoListState extends ChangeNotifier{
   Future<void> deleteTask(int id) async {
     try {
       _database.deleteTask(id);
+      log('Deleted task with id $id');
     } catch (e) {
       errorMessage = 'Failed to delete task: $e';
       log(errorMessage!);
@@ -126,6 +127,7 @@ class TodoListState extends ChangeNotifier{
   Future<void> deleteTaskList(int id) async {
     try {
       _database.deleteTaskList(id);
+      log('Deleted task list with id $id');
     } catch (e) {
       errorMessage = 'Failed to delete task list: $e';
       log(errorMessage!);
