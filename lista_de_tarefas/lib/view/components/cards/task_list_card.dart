@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/cards/card.dart';
+import 'package:lista_de_tarefas/view/components/edit_tasklist_form.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 
@@ -71,19 +72,36 @@ class _TaskListCardState extends State<TaskListCard> {
           ),
           padding: const EdgeInsets.all(16),
           //* Card content
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               
               //* TaskList name
-              Text(
+              Expanded(child: Text(
                 widget._taskList.name,
                 style: taskListNameStyle,
-              ),
+              )),
+
+              //* Edit task button
+              IconButton(onPressed: () {_showEditTaskListDialog(context);}, icon: const Icon(Icons.edit)),
             ],
           ),
         ),
       )
+    );
+  }
+
+  void _showEditTaskListDialog(BuildContext context) {
+    showDialog(
+      context: context, 
+      builder: (context) => AlertDialog(
+        content: EditTaskListForm(
+          taskList: widget._taskList, 
+          onSubmit: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
     );
   }
 }

@@ -108,7 +108,9 @@ class _TaskCardState extends State<TaskCard> {
                     ),
                   ),
 
+                  //* Edit task button
                   IconButton(onPressed: () {_showEditTaskDialog(context);}, icon: const Icon(Icons.edit)),
+                  
                   //* Done/undone button
                   IconButton(onPressed: onDonePressed, icon: Icon(Icons.done, color: doneIconColor)),
                 ],

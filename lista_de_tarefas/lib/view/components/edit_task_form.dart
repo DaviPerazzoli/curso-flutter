@@ -21,7 +21,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _dueDateController = TextEditingController();
-  DateTime? _dueDate;
+  late DateTime? _dueDate;
 
   @override
   void dispose() {

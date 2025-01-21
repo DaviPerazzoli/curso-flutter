@@ -65,5 +65,7 @@
     "pickAColor": "Pick a color",
     "newTaskList": "New task list",
     "taskUpdated": "Task updated!",
-    "editTask": "Edit task"
+    "editTask": "Edit task",
+    "taskListUpdated": "Task list updated!",
+    "editTaskList": "Edit task list"
 }
