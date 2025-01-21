@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
-import 'package:lista_de_tarefas/view/components/page.dart';
-import 'package:lista_de_tarefas/view/components/task_card.dart';
+import 'package:lista_de_tarefas/view/pages/page.dart';
+import 'package:lista_de_tarefas/view/components/cards/task_card.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// ignore: must_be_immutable
 class TasksPage extends StatefulWidget implements MyPage{
-  const TasksPage({super.key, required this.label, required this.icon, this.onLoad});
+  const TasksPage({super.key, required this.label, required this.icon, this.onLoad, required this.onAddTask});
 
   @override
   final String label;
@@ -18,6 +17,8 @@ class TasksPage extends StatefulWidget implements MyPage{
 
   @override
   final Function? onLoad;
+
+  final VoidCallback onAddTask;
 
   @override
   State<TasksPage> createState() => _TasksPageState();
@@ -56,6 +57,90 @@ class _TasksPageState extends State<TasksPage> {
     }
   }
 
+  void _showFilters (BuildContext context, TodoListState todoListState, AppLocalizations localization) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, setState) => 
+          AlertDialog(
+            contentPadding: const EdgeInsets.all(16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  localization.filters,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 20),
+                //* Para fechar: Navigator.of(context).pop();
+                Row(
+                  children: [
+                    Expanded(child: Text(localization.sortBy)),
+                    const SizedBox(width: 10),
+                    DropdownButton(
+                      
+                      value: selectedSortByOption,
+                      hint: DropdownMenuItem(
+                          child: Text(localization.select, style: Theme.of(context).textTheme.bodyMedium)
+                        ),
+                      items: [
+                        DropdownMenuItem(
+                          value: SortByOption.dueDate,
+                          child: Text(localization.dueDate, style: Theme.of(context).textTheme.bodyMedium)
+                        ),
+                        DropdownMenuItem(
+                          value: SortByOption.creationDate,
+                          child: Text(localization.creationDate, style: Theme.of(context).textTheme.bodyMedium)
+                        ),
+                      ], 
+                      onChanged: (SortByOption? opt) {
+                        if (opt != null) {
+                          setState(() {
+                            selectedSortByOption = opt;
+                          });
+                        }
+                      }
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          reverseSort = !reverseSort;
+                        });
+                      }, 
+                      // Esse IconButton abaixo:
+                      icon: Icon(reverseSort? Icons.arrow_drop_up: Icons.arrow_drop_down)
+                    )
+                  ],
+                ),
+
+                //* Ok button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
+                        foregroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.onPrimary)
+                      ),
+                      onPressed: () {
+                        todoListState.sortTasksBy(selectedSortByOption, reverseSort);
+                        Navigator.of(context).pop();
+                      }, 
+                      child: Text(localization.ok)
+                    )
+                  ],
+                )
+              ],
+            ),
+          )
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     var state = context.read<TodoListState>();
@@ -77,90 +162,6 @@ class _TasksPageState extends State<TasksPage> {
       setState(() {
         inSelectionMode = false;
       });
-    }
-
-    void showFilters () {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(builder: (context, setState) => 
-            AlertDialog(
-              contentPadding: const EdgeInsets.all(16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    localization.filters,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 20),
-                  //* Para fechar: Navigator.of(context).pop();
-                  Row(
-                    children: [
-                      Expanded(child: Text(localization.sortBy)),
-                      const SizedBox(width: 10),
-                      DropdownButton(
-                        
-                        value: selectedSortByOption,
-                        hint: DropdownMenuItem(
-                            child: Text(localization.select, style: Theme.of(context).textTheme.bodyMedium)
-                          ),
-                        items: [
-                          DropdownMenuItem(
-                            value: SortByOption.dueDate,
-                            child: Text(localization.dueDate, style: Theme.of(context).textTheme.bodyMedium)
-                          ),
-                          DropdownMenuItem(
-                            value: SortByOption.creationDate,
-                            child: Text(localization.creationDate, style: Theme.of(context).textTheme.bodyMedium)
-                          ),
-                        ], 
-                        onChanged: (SortByOption? opt) {
-                          if (opt != null) {
-                            setState(() {
-                              selectedSortByOption = opt;
-                            });
-                          }
-                        }
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            reverseSort = !reverseSort;
-                          });
-                        }, 
-                        // Esse IconButton abaixo:
-                        icon: Icon(reverseSort? Icons.arrow_drop_up: Icons.arrow_drop_down)
-                      )
-                    ],
-                  ),
-
-                  //* Ok button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
-                          foregroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.onPrimary)
-                        ),
-                        onPressed: () {
-                          todoListState.sortTasksBy(selectedSortByOption, reverseSort);
-                          Navigator.of(context).pop();
-                        }, 
-                        child: Text(localization.ok)
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          );
-        },
-      );
     }
 
     if (todoListState.selectedTaskList == null) {
@@ -214,7 +215,8 @@ class _TasksPageState extends State<TasksPage> {
           crossFadeState: inSelectionMode? CrossFadeState.showSecond : CrossFadeState.showFirst,
           duration: const Duration(milliseconds: 200),
         ),
-        //* Barra superior com icones (por enquanto apenas filtros)
+
+        //* Barra superior com icones
         Container(
           decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color:Theme.of(context).shadowColor, width: 0.2)),
@@ -230,8 +232,11 @@ class _TasksPageState extends State<TasksPage> {
                 child: Text(todoListState.selectedTaskList!.name, style: Theme.of(context).textTheme.titleMedium),
               )),
 
+              //* Botão nova task
+              IconButton(onPressed: widget.onAddTask, icon: const Icon(Icons.add_circle)),
+
               //* Botão de filtragem
-              IconButton(onPressed: showFilters, icon: const Icon(Icons.tune)),
+              IconButton(onPressed: () {_showFilters(context, todoListState, localization);}, icon: const Icon(Icons.tune)),
             ],
           ),
         ),
@@ -245,8 +250,7 @@ class _TasksPageState extends State<TasksPage> {
         //* Lista de tasks
         Column(
           children: viewTaskList,
-        ) 
-          
+        ),
       ]
     );
   }
@@ -323,6 +327,4 @@ class _TasksPageState extends State<TasksPage> {
       );
     }).toList();
   }
-
-  
 }

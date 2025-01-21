@@ -5,7 +5,9 @@ import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewTaskForm extends StatefulWidget {
-  const NewTaskForm({super.key});
+  const NewTaskForm({super.key, required this.onSubmit});
+
+  final VoidCallback onSubmit;
 
   @override
   State<NewTaskForm> createState() => _NewTaskFormState();
@@ -42,8 +44,6 @@ class _NewTaskFormState extends State<NewTaskForm> {
     
   }
 
-  
-  
   @override
   Widget build(BuildContext context) {
     var state = context.watch<TodoListState>();
@@ -89,6 +89,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
     if (state.selectedTaskList == null) {
       return Center(child: Text(localization.noTaskListSelected));
     }
+
+    ScaffoldMessengerState scaffoldMessenger = ScaffoldMessenger.of(context);
 
     return Form(
       key: _formKey,
@@ -159,13 +161,13 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       taskListId: state.selectedTaskList!.id!
                     ));
                   _resetForm();
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  scaffoldMessenger.showSnackBar(
                     SnackBar(
                       content: Text(localization.taskAdded, style: const TextStyle(color: Colors.white)),
                       backgroundColor: Colors.green,
                     )
                   );
+                  widget.onSubmit();
                 }
               }, 
               child: Row(
@@ -175,7 +177,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   const Icon(Icons.add_circle, size: 25),
                   Text(' ${localization.addTask}', style: const TextStyle(fontSize: 16),)
                 ],
-              )),
+              )
+            ),
           )
 
         ],

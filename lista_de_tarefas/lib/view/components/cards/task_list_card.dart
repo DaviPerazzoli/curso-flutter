@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lista_de_tarefas/view/components/card.dart';
+import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
+import 'package:lista_de_tarefas/view/components/cards/card.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 
 class TaskListCard extends StatefulWidget implements MyCard{
@@ -32,6 +34,8 @@ class _TaskListCardState extends State<TaskListCard> {
 
   @override
   Widget build(BuildContext context) {
+    TodoListState state = context.watch<TodoListState>();
+
     // This is necessary when excluding task list cards
     if (!widget.inSelectionMode) {
       setState(() {
@@ -45,8 +49,11 @@ class _TaskListCardState extends State<TaskListCard> {
     return GestureDetector(
       onLongPress: onCardSelected,
       onTap: () {
-        if(widget.inSelectionMode) {
+        if (widget.inSelectionMode) {
           onCardSelected();
+        } else {
+          state.setAllTasks(widget._taskList.id!);
+          // TODO fazer aparecer a tasks_page dessa taskList, podendo voltar
         }
       },
       //* Padding outside the card

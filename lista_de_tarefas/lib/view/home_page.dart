@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
-import 'package:lista_de_tarefas/view/components/page.dart';
-import 'package:lista_de_tarefas/view/components/settings_page.dart';
-import 'package:lista_de_tarefas/view/components/task_lists_page.dart';
-import 'package:lista_de_tarefas/view/components/tasks_page.dart';
-import 'package:lista_de_tarefas/view/components/new_task_page.dart';
+import 'package:lista_de_tarefas/view/pages/page.dart';
+import 'package:lista_de_tarefas/view/pages/settings_page.dart';
+import 'package:lista_de_tarefas/view/pages/task_lists_page.dart';
+import 'package:lista_de_tarefas/view/pages/tasks_page.dart';
+import 'package:lista_de_tarefas/view/pages/new_task_page.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
   bool firstTimeLoading = true;
+  bool isAddingTask = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,18 @@ class _HomePageState extends State<HomePage> {
     AppLocalizations localization = AppLocalizations.of(context)!;
     List<MyPage> pages = [
         TaskListsPage(label: localization.taskLists, icon: const Icon(Icons.table_rows_sharp), onLoad: state.setAllTaskLists,),
-        // TODO arrumar isso
-        TasksPage(label: localization.allTasks, icon: const Icon(Icons.task), onLoad:(){state.setAllTasks(state.selectedTaskList?.id ?? 1);}),
-        NewTaskPage(label: localization.newTask),
+        // TODO arrumar isso: pages: taskListsPage, newTaskList, settings
+        // TODO NewTasksPage tem que ser acessada por dentro da sua respectiva TasksPage
+        TasksPage(
+          label: localization.allTasks, 
+          icon: const Icon(Icons.task), 
+          onLoad:(){state.setAllTasks(state.selectedTaskList?.id ?? 1);},
+          onAddTask: () {
+            setState(() {
+              isAddingTask = true;
+            });
+          }
+        ),
         SettingsPage(label: localization.settings)
     ];
 
@@ -44,9 +54,18 @@ class _HomePageState extends State<HomePage> {
       pages[value].onLoad?.call();
     }
 
+
+    //* Lógica de qual página vai aparecer
     Widget page;
     try {
-      page = SafeArea(child: SingleChildScrollView(child: pages[pageIndex]));
+      page = isAddingTask? SafeArea( child: NewTaskPage(
+        label: localization.newTask,
+        onCancel: () {
+          setState(() {
+            isAddingTask = false;
+          });
+        }
+      )) : SafeArea(child: SingleChildScrollView(child: pages[pageIndex]));
     } on IndexError {
       throw UnimplementedError('No widget for $pageIndex');
     }

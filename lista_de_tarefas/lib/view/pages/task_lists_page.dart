@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
-import 'package:lista_de_tarefas/view/components/page.dart';
-import 'package:lista_de_tarefas/view/components/task_list_card.dart';
+import 'package:lista_de_tarefas/view/pages/page.dart';
+import 'package:lista_de_tarefas/view/components/cards/task_list_card.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

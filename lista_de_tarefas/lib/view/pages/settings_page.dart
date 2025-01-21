@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lista_de_tarefas/view/components/page.dart';
+import 'package:lista_de_tarefas/view/pages/page.dart';
 import 'package:lista_de_tarefas/view/components/settings/setting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'settings/language_setting.dart';
+import '../components/settings/language_setting.dart';
 
 
 class SettingsPage extends StatelessWidget implements MyPage{
