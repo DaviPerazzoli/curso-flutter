@@ -5,16 +5,20 @@ import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class NewTaskListForm extends StatefulWidget {
-  const NewTaskListForm({super.key});
+class EditTaskListForm extends StatefulWidget {
+  const EditTaskListForm({super.key, required TaskList taskList, this.onSubmit}): _taskList = taskList;
+
+  final TaskList _taskList;
+
+  final VoidCallback? onSubmit;
 
   @override
-  State<NewTaskListForm> createState() => _NewTaskListFormState();
+  State<EditTaskListForm> createState() => _EditTaskListFormState();
 }
 
-class _NewTaskListFormState extends State<NewTaskListForm> {
-  Color pickerColor = Colors.white;
-  Color selectedColor = Colors.white;
+class _EditTaskListFormState extends State<EditTaskListForm> {
+  late Color pickerColor;
+  late Color selectedColor;
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
 
@@ -22,6 +26,14 @@ class _NewTaskListFormState extends State<NewTaskListForm> {
   void dispose() {
     _nameController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    pickerColor = widget._taskList.color;
+    selectedColor = widget._taskList.color;
+    _nameController.text = widget._taskList.name;
+    super.initState();
   }
 
   void _resetForm() {
@@ -40,11 +52,14 @@ class _NewTaskListFormState extends State<NewTaskListForm> {
 
     ScaffoldMessengerState scaffoldMessenger = ScaffoldMessenger.of(context);
 
+    ThemeData theme = Theme.of(context);
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
 
           //* Tasklist name field
@@ -76,8 +91,8 @@ class _NewTaskListFormState extends State<NewTaskListForm> {
                 GestureDetector(
                   onTap: () {_showColorPicker(context, localization);},
                   child: Container(
-                    width: 50,
-                    height: 50,
+                    width: 30,
+                    height: 30,
                     decoration: BoxDecoration(
                       color: selectedColor,
                       border: Border.all(color: Colors.black),
@@ -94,28 +109,35 @@ class _NewTaskListFormState extends State<NewTaskListForm> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8))),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8)),
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.onPrimary
+              ),
               onPressed:() async {
                 if (_formKey.currentState!.validate()) {
-                  await state.addTaskList(TaskList(
+                  await state.updateTaskList(TaskList.fromExistent(
+                      widget._taskList.tasks,
                       name: _nameController.text,
                       color: selectedColor,
+                      id: widget._taskList.id!
                     ));
                   _resetForm();
                   scaffoldMessenger.showSnackBar(
                     SnackBar(
-                      content: Text(localization.taskListAdded, style: const TextStyle(color: Colors.white)),
+                      content: Text(localization.taskListUpdated, style: const TextStyle(color: Colors.white)),
                       backgroundColor: Colors.green,
                     )
                   );
+                  widget.onSubmit?.call();
                 }
               }, 
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:[
-                  const Icon(Icons.add_circle, size: 25),
-                  Text(' ${localization.addTaskList}', style: const TextStyle(fontSize: 16),)
+                  Icon(Icons.edit, size: 25, color: theme.colorScheme.onPrimary),
+                  Text(' ${localization.editTaskList}', style: const TextStyle(fontSize: 16),)
                 ],
               )
             ),

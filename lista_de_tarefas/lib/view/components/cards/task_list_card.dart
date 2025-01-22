@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/cards/card.dart';
-import 'package:lista_de_tarefas/view/components/edit_tasklist_form.dart';
+import 'package:lista_de_tarefas/view/components/forms/edit_tasklist_form.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 

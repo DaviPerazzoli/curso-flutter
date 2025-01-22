@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/components/cards/card.dart';
-import 'package:lista_de_tarefas/view/components/edit_task_form.dart';
+import 'package:lista_de_tarefas/view/components/forms/edit_task_form.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -67,9 +67,9 @@ class _TaskCardState extends State<TaskCard> {
     if (isSelected) {
       cardColor = Theme.of(context).primaryColorLight;
     } else if (widget._task.isLate) {
-      cardColor = const Color.fromARGB(255, 248, 190, 186);
+      cardColor = Theme.of(context).colorScheme.errorContainer;
     } else {
-      cardColor = Theme.of(context).cardColor;
+      cardColor = Theme.of(context).colorScheme.surface;
     }
 
     Color doneIconColor = isDone ? Colors.green : Theme.of(context).primaryColorLight;
@@ -91,7 +91,8 @@ class _TaskCardState extends State<TaskCard> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             boxShadow: kElevationToShadow[4],
-            color: cardColor
+            color: cardColor,
+            border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
           ),
           padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
           //* Card content

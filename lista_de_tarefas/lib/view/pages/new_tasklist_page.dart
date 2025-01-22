@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lista_de_tarefas/view/components/new_tasklist_form.dart';
+import 'package:lista_de_tarefas/view/components/forms/new_tasklist_form.dart';
 import 'package:lista_de_tarefas/view/pages/page.dart';
 
 class NewTaskListPage extends StatelessWidget implements MyPage{

@@ -67,5 +67,10 @@
     "taskUpdated": "Task updated!",
     "editTask": "Edit task",
     "taskListUpdated": "Task list updated!",
-    "editTaskList": "Edit task list"
+    "editTaskList": "Edit task list",
+    "selectedTheme": "Selected theme",
+    "deviceTheme": "Device theme",
+    "light": "Light",
+    "dark": "Dark",
+    "theme": "Theme"
 }

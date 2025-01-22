@@ -102,6 +102,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
 
     ScaffoldMessengerState scaffoldMessenger = ScaffoldMessenger.of(context);
 
+    ThemeData theme = Theme.of(context);
+
     return Form(
       key: _formKey,
       child: Column(
@@ -162,7 +164,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8))),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8)),
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.onPrimary
+              ),
               onPressed:() async {
                 if (_formKey.currentState!.validate()) {
                   await state.updateTask(Task.fromExistent(
@@ -188,7 +194,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:[
-                  const Icon(Icons.edit, size: 25),
+                  Icon(Icons.edit, size: 25, color: theme.colorScheme.onPrimary),
                   Text(' ${localization.editTask}', style: const TextStyle(fontSize: 16),)
                 ],
               )

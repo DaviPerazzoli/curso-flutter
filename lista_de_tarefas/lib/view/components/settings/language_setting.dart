@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lista_de_tarefas/locale_notifier.dart';
+import 'package:lista_de_tarefas/notifiers/locale_notifier.dart';
 import 'package:provider/provider.dart';
 
 class LanguageSettingDropdown extends StatefulWidget{

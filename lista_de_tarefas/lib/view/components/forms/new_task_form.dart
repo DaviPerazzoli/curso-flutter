@@ -48,6 +48,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
     var state = context.watch<TodoListState>();
     AppLocalizations localization = AppLocalizations.of(context)!;
 
+    ThemeData theme = Theme.of(context);
+
     Future<void> selectDueDate(BuildContext context) async {
       final DateTime? pickedDate = await showDatePicker(
         context: context, 
@@ -150,7 +152,11 @@ class _NewTaskFormState extends State<NewTaskForm> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8))),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8)),
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.onPrimary
+              ),
               onPressed:() async {
                 if (_formKey.currentState!.validate()) {
                   await state.addTask(Task.create(
@@ -173,7 +179,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:[
-                  const Icon(Icons.add_circle, size: 25),
+                  Icon(Icons.add_circle, size: 25, color: theme.colorScheme.onPrimary),
                   Text(' ${localization.addTask}', style: const TextStyle(fontSize: 16),)
                 ],
               )
