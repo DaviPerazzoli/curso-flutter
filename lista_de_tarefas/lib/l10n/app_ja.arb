@@ -67,5 +67,20 @@
     "taskUpdated": "タスクが更新されました！",
     "editTask": "タスクを編集",
     "taskListUpdated": "タスクリストが更新されました！",
-    "editTaskList": "タスクリストを編集"
+    "editTaskList": "タスクリストを編集",
+    "selectedTheme": "選択されたテーマ",
+    "deviceTheme": "デバイステーマ",
+    "light": "ライト",
+    "dark": "ダーク",
+    "theme": "テーマ",
+    "dateOn": "{date}",
+    "@dateOn": {
+        "description": "日付の上の日付",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            }
+        }
+    }
 }

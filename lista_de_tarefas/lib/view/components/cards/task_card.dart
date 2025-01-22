@@ -92,7 +92,7 @@ class _TaskCardState extends State<TaskCard> {
             borderRadius: BorderRadius.circular(8),
             boxShadow: kElevationToShadow[4],
             color: cardColor,
-            border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+            border: Border.all(color: Colors.white.withAlpha(25), width: 1),
           ),
           padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
           //* Card content

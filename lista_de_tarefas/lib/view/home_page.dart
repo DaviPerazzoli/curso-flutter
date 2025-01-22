@@ -132,9 +132,9 @@ class _HomePageState extends State<HomePage> {
             onDestinationSelected: onDestinationSelected,
           ),
         );
-        container = Row(
-          children: [menu, SafeArea(child: page)],
-        );
+        container = SafeArea(child: Row(
+          children: [menu, page],
+        ));
       } else {
         
         container = SafeArea(child: page);
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
 
       return Scaffold(
         body: container,
-        bottomNavigationBar: isWide ? null : BottomNavigationBar(items: [
+        bottomNavigationBar: isWide ? null : SafeArea(child: BottomNavigationBar(items: [
             for (MyPage p in pages)
               BottomNavigationBarItem(icon: p.icon,label: p.label),
           ],
@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
         
         ),
 
-      );
+      ));
     });
   }
 }

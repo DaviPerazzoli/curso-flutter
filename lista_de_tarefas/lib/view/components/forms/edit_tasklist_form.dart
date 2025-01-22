@@ -91,8 +91,8 @@ class _EditTaskListFormState extends State<EditTaskListForm> {
                 GestureDetector(
                   onTap: () {_showColorPicker(context, localization);},
                   child: Container(
-                    width: 30,
-                    height: 30,
+                    width: 40,
+                    height: 40,
                     decoration: BoxDecoration(
                       color: selectedColor,
                       border: Border.all(color: Colors.black),

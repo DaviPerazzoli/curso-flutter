@@ -67,5 +67,20 @@
     "taskUpdated": "تم تحديث المهمة!",
     "editTask": "تحرير المهمة",
     "taskListUpdated": "تم تحديث قائمة المهام!",
-    "editTaskList": "تحرير قائمة المهام"
+    "editTaskList": "تحرير قائمة المهام",
+    "selectedTheme": "السمة المختارة",
+    "deviceTheme": "سمة الجهاز",
+    "light": "فاتح",
+    "dark": "داكن",
+    "theme": "سمة",
+    "dateOn": "{date}",
+    "@dateOn": {
+        "description": "التاريخ في التاريخ",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            }
+        }
+    }
 }

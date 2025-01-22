@@ -67,5 +67,20 @@
     "taskUpdated": "Tâche mise à jour !",
     "editTask": "Modifier la tâche",
     "taskListUpdated": "Liste de tâches mise à jour !",
-    "editTaskList": "Modifier la liste de tâches"
+    "editTaskList": "Modifier la liste de tâches",
+    "selectedTheme": "Thème sélectionné",
+    "deviceTheme": "Thème de l''appareil",
+    "light": "Clair",
+    "dark": "Sombre",
+    "theme": "Thème",
+    "dateOn": "{date}",
+    "@dateOn": {
+        "description": "Date sur la date",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            }
+        }
+    }
 }

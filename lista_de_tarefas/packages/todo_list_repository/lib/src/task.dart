@@ -89,7 +89,7 @@ class Task {
 
   int get taskListId => _taskListId;
 
-  String _2digitNumber (int number) {
+  String _twoDigitNumber (int number) {
     return number > 9? number.toString() : '0$number';
   }
 
@@ -97,7 +97,7 @@ class Task {
     if (date == null) {
       return '';
     }
-    String readable = '${_2digitNumber(date.month)}/${_2digitNumber(date.day)}/${date.year} at ${_2digitNumber(date.hour)}:${_2digitNumber(date.minute)}:${_2digitNumber(date.second)}';
+    String readable = '${_twoDigitNumber(date.month)}/${_twoDigitNumber(date.day)}/${date.year} at ${_twoDigitNumber(date.hour)}:${_twoDigitNumber(date.minute)}:${_twoDigitNumber(date.second)}';
     return readable;
   }
 

@@ -67,5 +67,20 @@
     "taskUpdated": "¡Tarea actualizada!",
     "editTask": "Editar tarea",
     "taskListUpdated": "¡Lista de tareas actualizada!",
-    "editTaskList": "Editar lista de tareas"
+    "editTaskList": "Editar lista de tareas",
+    "selectedTheme": "Tema seleccionado",
+    "deviceTheme": "Tema del dispositivo",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "theme": "Tema",
+    "dateOn": "{date}",
+    "@dateOn": {
+        "description": "Fecha en la fecha",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            }
+        }
+    }
 }

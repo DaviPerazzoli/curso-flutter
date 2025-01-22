@@ -173,6 +173,8 @@ class _TasksPageState extends State<TasksPage> {
 
     String selectionMenuText = localization.nTasksSelected(_selectedTaskCards.length);
 
+    double iconSize = 30;
+
     var tasks = todoListState.selectedTaskList!.tasks;
 
     //* Lógica decidindo se vai mostrar a data de criação ou conclusão da tarefa
@@ -224,14 +226,14 @@ class _TasksPageState extends State<TasksPage> {
         //* Barra superior com icones
         Container(
           decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color:Theme.of(context).shadowColor, width: 0.2)),
+            border: Border(bottom: BorderSide(color:Theme.of(context).colorScheme.onSurface, width: 0.2)),
           ),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //* Botão voltar
-              IconButton(onPressed: widget.onCancel, icon: const Icon(Icons.arrow_back)),
+              IconButton(onPressed: widget.onCancel, icon: Icon(Icons.arrow_back, size: iconSize,)),
 
               //* Nome da task list
               Expanded(child: Padding(
@@ -243,18 +245,21 @@ class _TasksPageState extends State<TasksPage> {
               )),
 
               //* Botão nova task
-              IconButton(onPressed: widget.onAddTask, icon: const Icon(Icons.add_circle)),
+              IconButton(onPressed: widget.onAddTask, icon: Icon(Icons.add_circle, size: iconSize)),
 
               //* Botão de filtragem
-              IconButton(onPressed: () {_showFilters(context, todoListState, localization);}, icon: const Icon(Icons.tune)),
+              IconButton(onPressed: () {_showFilters(context, todoListState, localization);}, icon: Icon(Icons.tune, size: iconSize)),
             ],
           ),
         ),
 
         //* Texto dizendo qual opção de ordenamento está sendo usada
         Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-          child: Text(localization.bySelected(selectedSortByOption.toString().split('.')[1])),
+          padding: const EdgeInsets.fromLTRB(12, 8, 8, 0),
+          child: Text(
+            localization.bySelected(selectedSortByOption.toString().split('.')[1]),
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
         ),
          
         //* Lista de tasks
@@ -305,7 +310,7 @@ class _TasksPageState extends State<TasksPage> {
       return Column(
         children: [
           if (shouldDisplayDate)
-            Center(child: Text(task.readableDueDate.split(' ')[0]),),
+            Center(child: Text(localization.dateOn(task.dueDate!)),),
           TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
         ],
       );
@@ -331,7 +336,7 @@ class _TasksPageState extends State<TasksPage> {
       return Column(
         children: [
           if (shouldDisplayDate)
-            Center(child: Text(task.readableCreationDate.split(' ')[0]),),
+            Center(child: Text(localization.dateOn(task.creationDate)),),
           TaskCard(task, onSelected: _onSelected, inSelectionMode: inSelectionMode),
         ],
       );

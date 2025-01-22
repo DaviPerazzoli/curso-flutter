@@ -72,5 +72,15 @@
     "deviceTheme": "Device theme",
     "light": "Light",
     "dark": "Dark",
-    "theme": "Theme"
+    "theme": "Theme",
+    "dateOn": "{date}",
+    "@dateOn": {
+        "description": "Date on the date",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            }
+        }
+    }
 }

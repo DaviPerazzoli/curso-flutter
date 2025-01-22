@@ -67,5 +67,20 @@
     "taskUpdated": "任务已更新！",
     "editTask": "编辑任务",
     "taskListUpdated": "任务列表已更新！",
-    "editTaskList": "编辑任务列表"
+    "editTaskList": "编辑任务列表",
+    "selectedTheme": "选定的主题",
+    "deviceTheme": "设备主题",
+    "light": "浅色",
+    "dark": "深色",
+    "theme": "主题",
+    "dateOn": "{date}",
+    "@dateOn": {
+        "description": "日期上的日期",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            }
+        }
+    }
 }

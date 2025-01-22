@@ -67,5 +67,20 @@
     "taskUpdated": "Задача обновлена!",
     "editTask": "Редактировать задачу",
     "taskListUpdated": "Список задач обновлен!",
-    "editTaskList": "Редактировать список задач"
+    "editTaskList": "Редактировать список задач",
+    "selectedTheme": "Выбранная тема",
+    "deviceTheme": "Тема устройства",
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "theme": "Тема",
+    "dateOn": "{date}",
+    "@dateOn": {
+        "description": "Дата на дате",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMd"
+            }
+        }
+    }
 }
