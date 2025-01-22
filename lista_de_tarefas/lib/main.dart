@@ -7,7 +7,6 @@ import 'app.dart';
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // import 'package:flutter/foundation.dart';
 
-// TODO Acrescentar a funcionalidade de dar swipe pros lados pra mudar de página
 void main() {
   // if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.windows || 
   //                 defaultTargetPlatform == TargetPlatform.linux || 
