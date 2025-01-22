@@ -188,7 +188,7 @@ class _TasksPageState extends State<TasksPage> {
 
     List<Widget> taskListView;
     if (todoListState.isLoading) {
-      taskListView = [Center(child: LoadingAnimationWidget.discreteCircle(color: Theme.of(context).primaryColor, size: 30))];
+      taskListView = [Center(child: LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).primaryColor, size: 30))];
     } else if (tasks.isEmpty) {
       taskListView = [Center( child: Text(localization.noTasksYet))];
     } else {

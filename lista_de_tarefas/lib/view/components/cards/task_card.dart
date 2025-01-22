@@ -144,8 +144,8 @@ class _TaskCardState extends State<TaskCard> {
                 onTap: showTaskDetails,
                 child: AnimatedRotation(
                   turns: isExpanded? 0.5 : 0, 
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
+                  duration: const Duration(milliseconds: 100),
+                  curve: Curves.bounceIn,
                   child: const Icon(Icons.keyboard_arrow_down),
                 ),
               ),

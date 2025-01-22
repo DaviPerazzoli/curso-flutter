@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:todo_list_repository/todo_list_repository.dart';
 import 'package:lista_de_tarefas/todo_list_view_model/todo_list_state.dart';
 import 'package:lista_de_tarefas/view/pages/page.dart';
@@ -67,12 +68,17 @@ class _TaskListsPageState extends State<TaskListsPage> {
         inSelectionMode = false;
       });
     }
+
+    if (state.isLoading) {
+      return Center(child: LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).primaryColor, size: 30));
+    }
     
     if (state.taskLists.isEmpty) {
       return Center(child: Text(localization.noTaskLists));
     }
 
     String selectionMenuText = localization.nTaskListsSelected(_selectedTaskListCards.length);
+
 
     List<TaskListCard> viewTaskLists = state.taskLists.map(
       (TaskList taskList) => TaskListCard(taskList, onSelected: _onSelected, inSelectionMode: inSelectionMode, onTap: widget.onTaskListTap)

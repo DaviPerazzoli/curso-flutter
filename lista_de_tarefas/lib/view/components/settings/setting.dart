@@ -39,7 +39,7 @@ class _SettingState extends State<Setting> {
               )),
               AnimatedRotation(
                 turns: isExpanded? 0.5 : 0,
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 100),
                 curve: Curves.easeInOut,
                 child: const Icon(Icons.keyboard_arrow_down),
               ),

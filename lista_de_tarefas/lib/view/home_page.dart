@@ -21,14 +21,43 @@ class _HomePageState extends State<HomePage> {
   bool firstTimeLoading = true;
   bool isAddingTask = false;
   bool isSeeingTasks = false;
+  bool wasInNotSwipablePage = false;
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
     var state = context.read<TodoListState>();
 
     AppLocalizations localization = AppLocalizations.of(context)!;
-    List<MyPage> pages = [
-        TaskListsPage(
+
+    //* Lógica de páginas aninhadas
+    MyPage taskListPage;
+    if (isAddingTask) {
+        taskListPage = NewTaskPage(
+          label: localization.newTask,
+          onCancel: () {
+            setState(() {
+              isAddingTask = false;
+            });
+          }
+        );
+      } else if (isSeeingTasks) {
+        taskListPage = TasksPage(
+          label: localization.allTasks, 
+          icon: const Icon(Icons.task), 
+          onAddTask: () {
+            setState(() {
+              isAddingTask = true;
+            });
+          },
+          onCancel: () {
+            setState(() {
+              isSeeingTasks = false;
+            });
+          }
+        );
+      } else {
+        taskListPage = TaskListsPage(
           label: localization.taskLists, 
           icon: const Icon(Icons.table_rows_sharp), 
           onLoad: state.setAllTaskLists, 
@@ -37,7 +66,11 @@ class _HomePageState extends State<HomePage> {
               isSeeingTasks = true;
             });
           },
-        ),
+        );
+      }
+
+    List<MyPage> pages = [
+        taskListPage,
         NewTaskListPage(label: localization.newTaskList),
         SettingsPage(label: localization.settings)
     ];
@@ -53,39 +86,32 @@ class _HomePageState extends State<HomePage> {
         isAddingTask = false;
         isSeeingTasks = false;
       });
+      try{
+        _pageController.jumpToPage(value);
+      // ignore: empty_catches
+      } on AssertionError {
+        // Ocorre um erro quando se está numa página que não faz parte do page view
+      }
+
       pages[value].onLoad?.call();
     }
+
+    
 
     //* Lógica de qual página vai aparecer
     Widget page;
     try {
-      if (isAddingTask) {
-        page = SafeArea( child: NewTaskPage(
-          label: localization.newTask,
-          onCancel: () {
-            setState(() {
-              isAddingTask = false;
-            });
-          }
-        ));
-      } else if (isSeeingTasks) {
-        page = SafeArea( child: SingleChildScrollView(child: TasksPage(
-          label: localization.allTasks, 
-          icon: const Icon(Icons.task), 
-          onAddTask: () {
-            setState(() {
-              isAddingTask = true;
-            });
-          },
-          onCancel: () {
-            setState(() {
-              isSeeingTasks = false;
-            });
-          }
-        )));
-      } else {
-        page = SafeArea(child: SingleChildScrollView(child: pages[pageIndex]));
-      }
+      
+      page = PageView(
+        controller: _pageController,
+        onPageChanged: (value) {
+          setState(() {
+            pageIndex = value;
+          });
+        },
+        children: [for (MyPage p in pages) SingleChildScrollView(child: p)],
+      );
+      
     } on IndexError {
       throw UnimplementedError('No widget for $pageIndex');
     }
@@ -107,11 +133,11 @@ class _HomePageState extends State<HomePage> {
           ),
         );
         container = Row(
-          children: [menu, page],
+          children: [menu, SafeArea(child: page)],
         );
       } else {
         
-        container = page;
+        container = SafeArea(child: page);
         
       }
 
